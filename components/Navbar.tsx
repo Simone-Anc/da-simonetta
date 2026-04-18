@@ -15,7 +15,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-[#f5f3ee] border-b border-black/10">
-      <nav className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <nav className="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-2">
 
         {/* Logo — sempre a sinistra */}
         <Link
@@ -26,7 +26,7 @@ export default function Navbar() {
           Da Simonetta
         </Link>
 
-        {/* Links + switcher — su mobile i link si accorciano */}
+        {/* Links + switcher — sempre visibili */}
         <div className="flex items-center gap-3 sm:gap-6">
           <Link
             href={`/${locale}/menu`}
@@ -36,14 +36,13 @@ export default function Navbar() {
           </Link>
           <Link
             href={`/${locale}/dove-siamo`}
-            className="text-sm text-[#6a6a5a] hover:text-[#1a1a18] transition-colors whitespace-nowrap
-                       hidden xs:block sm:block"
+            className="text-sm text-[#6a6a5a] hover:text-[#1a1a18] transition-colors whitespace-nowrap"
           >
             {t('location')}
           </Link>
           <button
             onClick={() => router.push(switchPath)}
-            className="text-xs font-medium px-3 py-1.5 rounded-full border border-black/20
+            className="text-xs font-medium px-2.5 py-1.5 rounded-full border border-black/20
                        text-[#6a6a5a] hover:text-[#1a1a18] hover:border-black/40 transition-all shrink-0"
           >
             {otherLocale.toUpperCase()}
