@@ -40,7 +40,6 @@ export default function MenuClient({
 }) {
   const t = useTranslations('menu')
   const [activeCategory, setActiveCategory] = useState('all')
-  const [vegOnly, setVegOnly] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const pathname = usePathname()
@@ -95,7 +94,7 @@ export default function MenuClient({
       {/* Segmented control scrollabile su mobile */}
       <div
         ref={scrollRef}
-        className="overflow-x-auto pb-1 mb-4 -mx-4 px-4 sm:mx-0 sm:px-0"
+        className="overflow-x-auto pb-1 mb-8 -mx-4 px-4 sm:mx-0 sm:px-0"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         <div className="flex gap-1 p-1 bg-[#e8e6e0] rounded-xl w-max sm:w-fit">
@@ -115,17 +114,6 @@ export default function MenuClient({
         </div>
       </div>
 
-      {/* Filtro vegetariano */}
-      <label className="flex items-center gap-2 text-sm text-[#6a6a5a] cursor-pointer mb-8 sm:mb-10 select-none w-fit">
-        <input
-          type="checkbox"
-          checked={vegOnly}
-          onChange={e => setVegOnly(e.target.checked)}
-          className="rounded border-black/20"
-        />
-        {t('vegetarian')}
-      </label>
-
       {/* Sezioni menu */}
       <div className="space-y-10 sm:space-y-12">
         {visibleCategories.map(cat => {
@@ -141,7 +129,7 @@ export default function MenuClient({
                     <h3 className="text-xs uppercase tracking-widest text-[#6a6a5a] mb-4">
                       {sub.label[locale]}
                     </h3>
-                    <ItemList items={sub.items} locale={locale} vegOnly={vegOnly} t={t} />
+                    <ItemList items={sub.items} locale={locale} t={t} />
                   </div>
                 ))}
               </section>
@@ -149,8 +137,7 @@ export default function MenuClient({
           }
 
           const items = cat.items ?? []
-          const filtered = vegOnly ? items.filter(i => i.vegetarian) : items
-          if (filtered.length === 0) return null
+          if (items.length === 0) return null
 
           return (
             <section key={cat.id}>
@@ -158,7 +145,7 @@ export default function MenuClient({
                   style={{ fontFamily: "'Fraunces', serif" }}>
                 {cat.label[locale]}
               </h2>
-              <ItemList items={filtered} locale={locale} vegOnly={false} t={t} />
+              <ItemList items={items} locale={locale} t={t} />
             </section>
           )
         })}
@@ -184,7 +171,7 @@ function SegTab({
   return (
     <button
       onClick={onClick}
-      className={`text-xs px-3 py-1.5 rounded-lg transition-all whitespace-nowrap ${
+      className={`text-sm px-4 py-2 rounded-lg transition-all whitespace-nowrap ${
         active
           ? 'bg-[#f5f3ee] text-[#1a1a18] font-medium'
           : 'text-[#6a6a5a] hover:text-[#1a1a18]'
@@ -198,30 +185,20 @@ function SegTab({
 function ItemList({
   items,
   locale,
-  vegOnly,
   t,
 }: {
   items: MenuItem[]
   locale: Locale
-  vegOnly: boolean
   t: ReturnType<typeof useTranslations>
 }) {
-  const filtered = vegOnly ? items.filter(i => i.vegetarian) : items
-  if (filtered.length === 0) return null
+  if (items.length === 0) return null
 
   return (
     <div className="divide-y divide-black/5">
-      {filtered.map(item => (
+      {items.map(item => (
         <div key={item.id} className="flex justify-between items-start py-3 gap-3">
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-medium">{item.name[locale]}</span>
-              {item.vegetarian && (
-                <span className="text-[10px] border border-green-600 text-green-700 px-1.5 py-0.5 rounded-full">
-                  V
-                </span>
-              )}
-            </div>
+            <span className="text-sm font-medium">{item.name[locale]}</span>
             {item.description && (
               <p className="text-xs text-[#6a6a5a] mt-0.5 leading-snug">
                 {item.description[locale]}

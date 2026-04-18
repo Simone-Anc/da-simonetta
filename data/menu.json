@@ -88,7 +88,7 @@
     },
     {
       "id": "pizza",
-      "label": { "it": "Pizzeria (forno a legna)", "en": "Pizza (wood-fired oven)" },
+      "label": { "it": "Pizza", "en": "Pizza" },
       "items": [
         { "id": "marinara",        "name": { "it": "Marinara",        "en": "Marinara" },        "price": 7.00,  "description": { "it": "Pomodoro, aglio, origano",                                                               "en": "Tomato, garlic, oregano" } },
         { "id": "margherita",      "name": { "it": "Margherita",      "en": "Margherita" },      "price": 7.00,  "description": { "it": "Pomodoro, mozzarella, basilico",                                                         "en": "Tomato, mozzarella, basil" } },
