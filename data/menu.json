@@ -14,7 +14,7 @@
     },
     "hours": {
       "it": [
-        { "day": "Lunedì",    "lunch": "12:00–15:00", "dinner": null },
+        { "day": "Lunedì",    "lunch": "12:00–15:00", "dinner": "19:00–23:00"  },
         { "day": "Martedì",   "lunch": "12:00–15:00", "dinner": "19:00–23:00" },
         { "day": "Mercoledì", "lunch": "12:00–15:00", "dinner": "19:00–23:00" },
         { "day": "Giovedì",   "lunch": "12:00–15:00", "dinner": "19:00–23:00" },

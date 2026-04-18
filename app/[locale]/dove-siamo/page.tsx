@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
-import QRSection from '@/components/QRSection'
 import menuData from '@/data/menu.json'
 
 export const metadata: Metadata = {
@@ -29,7 +28,6 @@ export default async function DoveSiamoPage({
         {t('title')}
       </h1>
 
-      {/* Su mobile: colonna unica. Su desktop: 2 colonne */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
 
         {/* Mappa + contatti */}
@@ -57,7 +55,6 @@ export default async function DoveSiamoPage({
           </a>
 
           <div className="mt-4 space-y-3">
-            {/* Indirizzo */}
             <div className="flex gap-3 items-start border border-black/10 rounded-lg px-3 py-2.5">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                    strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"
@@ -71,7 +68,6 @@ export default async function DoveSiamoPage({
               </div>
             </div>
 
-            {/* Telefono — cliccabile su mobile */}
             <a href="tel:+390670491589"
                className="flex gap-3 items-start border border-black/10 rounded-lg px-3 py-2.5
                           hover:border-black/20 transition-colors">
@@ -88,7 +84,7 @@ export default async function DoveSiamoPage({
           </div>
         </div>
 
-        {/* Orari + QR */}
+        {/* Orari */}
         <div>
           <h2 className="text-xs uppercase tracking-widest text-[#6a6a5a] mb-4">{t('hours')}</h2>
           <div className="divide-y divide-black/5">
@@ -111,8 +107,8 @@ export default async function DoveSiamoPage({
               </div>
             ))}
           </div>
-          <QRSection locale={locale} />
         </div>
+
       </div>
     </div>
   )
