@@ -1,0 +1,45 @@
+{
+  "nav": {
+    "menu": "Menu",
+    "location": "Dove siamo"
+  },
+  "home": {
+    "eyebrow": "Roma, cucina tradizionale",
+    "title": "Trattoria Da Simonetta",
+    "subtitle": "Pizza cotta in forno a legna, primi e secondi della tradizione romana. Tavoli all'aperto, Wi-Fi, piatti vegetariani.",
+    "cta": "Sfoglia il menu",
+    "features": ["Tavoli all'aperto", "Piatti vegetariani", "Wi-Fi"],
+    "strip": {
+      "hours": "Orari",
+      "location": "Dove siamo",
+      "contact": "Contatti"
+    },
+    "hoursShort": "Lun 12–15 · Mar–Dom 12–15 e 19–23",
+    "featured": "I nostri punti di forza",
+    "featuredTitle": "Forno a legna dal 1995"
+  },
+  "menu": {
+    "eyebrow": "Cucina romana",
+    "title": "Il nostro menu",
+    "all": "Tutto",
+    "vegetarian": "Vegetariano",
+    "note": "In assenza del prodotto fresco alcuni ingredienti potrebbero essere surgelati.",
+    "onRequest": "Solo su prenotazione"
+  },
+  "location": {
+    "eyebrow": "Trovaci",
+    "title": "Dove siamo",
+    "address": "Indirizzo",
+    "phone": "Telefono",
+    "hours": "Orari",
+    "email": "Email",
+    "openMaps": "Apri in Google Maps",
+    "closed": "Chiuso",
+    "lunchOnly": "Solo pranzo",
+    "qrTitle": "Menu sul tuo telefono",
+    "qrSub": "Scannerizza per aprire il menu nella tua lingua."
+  },
+  "footer": {
+    "copy": "© 2025 Trattoria Da Simonetta · Via Pontremoli 30, Roma"
+  }
+}
