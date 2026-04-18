@@ -24,7 +24,7 @@ export default async function DoveSiamoPage({
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
       <p className="text-xs text-[#6a6a5a] uppercase tracking-widest mb-2">{t('eyebrow')}</p>
       <h1 className="text-3xl sm:text-4xl font-medium mb-8 sm:mb-10"
-          style={{ fontFamily: 'Satisfy, cursive' }}>
+          style={{ fontFamily: "'Fraunces', serif" }}>
         {t('title')}
       </h1>
 

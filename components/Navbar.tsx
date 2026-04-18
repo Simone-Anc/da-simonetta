@@ -21,7 +21,7 @@ export default function Navbar() {
         <Link
           href={`/${locale}`}
           className="text-xl sm:text-2xl shrink-0 leading-none"
-          style={{ fontFamily: 'Satisfy, cursive' }}
+          style={{ fontFamily: "'Fraunces', serif" }}
         >
           Da Simonetta
         </Link>

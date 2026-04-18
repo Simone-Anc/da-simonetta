@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react'
 import { useTranslations } from 'next-intl'
+import { useRouter, usePathname } from 'next/navigation'
 
 type Locale = 'it' | 'en'
 
@@ -41,9 +42,13 @@ export default function MenuClient({
   const [activeCategory, setActiveCategory] = useState('all')
   const [vegOnly, setVegOnly] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const otherLocale: Locale = locale === 'it' ? 'en' : 'it'
+  const switchPath = pathname.replace(`/${locale}`, `/${otherLocale}`)
 
   const categories = menuData.categories
-
   const visibleCategories =
     activeCategory === 'all'
       ? categories
@@ -51,14 +56,43 @@ export default function MenuClient({
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
-      {/* Intestazione */}
-      <p className="text-xs text-[#6a6a5a] uppercase tracking-widest mb-2">{t('eyebrow')}</p>
-      <h1 className="text-3xl sm:text-4xl font-medium mb-6 sm:mb-8"
-          style={{ fontFamily: 'Satisfy, cursive' }}>
-        {t('title')}
-      </h1>
 
-      {/* ── Segmented control scrollabile su mobile ── */}
+      {/* Intestazione + switcher lingua */}
+      <div className="flex items-start justify-between gap-4 mb-6 sm:mb-8">
+        <div>
+          <p className="text-xs text-[#6a6a5a] uppercase tracking-widest mb-2">{t('eyebrow')}</p>
+          <h1 className="text-3xl sm:text-4xl font-medium"
+              style={{ fontFamily: "'Fraunces', serif" }}>
+            {t('title')}
+          </h1>
+        </div>
+
+        {/* Switcher IT / EN */}
+        <div className="flex items-center gap-1 p-1 bg-[#e8e6e0] rounded-xl shrink-0 mt-1">
+          <button
+            onClick={() => locale !== 'it' && router.push(switchPath)}
+            className={`text-xs px-3 py-1.5 rounded-lg transition-all ${
+              locale === 'it'
+                ? 'bg-[#f5f3ee] text-[#1a1a18] font-medium'
+                : 'text-[#6a6a5a] hover:text-[#1a1a18]'
+            }`}
+          >
+            IT
+          </button>
+          <button
+            onClick={() => locale !== 'en' && router.push(switchPath)}
+            className={`text-xs px-3 py-1.5 rounded-lg transition-all ${
+              locale === 'en'
+                ? 'bg-[#f5f3ee] text-[#1a1a18] font-medium'
+                : 'text-[#6a6a5a] hover:text-[#1a1a18]'
+            }`}
+          >
+            EN
+          </button>
+        </div>
+      </div>
+
+      {/* Segmented control scrollabile su mobile */}
       <div
         ref={scrollRef}
         className="overflow-x-auto pb-1 mb-4 -mx-4 px-4 sm:mx-0 sm:px-0"
@@ -99,7 +133,7 @@ export default function MenuClient({
             return (
               <section key={cat.id}>
                 <h2 className="text-2xl font-medium mb-5 pb-2 border-b border-black/10"
-                    style={{ fontFamily: 'Satisfy, cursive' }}>
+                    style={{ fontFamily: "'Fraunces', serif" }}>
                   {cat.label[locale]}
                 </h2>
                 {cat.subcategories.map((sub, i) => (
@@ -121,7 +155,7 @@ export default function MenuClient({
           return (
             <section key={cat.id}>
               <h2 className="text-2xl font-medium mb-5 pb-2 border-b border-black/10"
-                  style={{ fontFamily: 'Satisfy, cursive' }}>
+                  style={{ fontFamily: "'Fraunces', serif" }}>
                 {cat.label[locale]}
               </h2>
               <ItemList items={filtered} locale={locale} vegOnly={false} t={t} />
