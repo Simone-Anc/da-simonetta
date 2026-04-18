@@ -6,7 +6,7 @@
   "home": {
     "eyebrow": "Roma, cucina tradizionale",
     "title": "Trattoria Da Simonetta",
-    "subtitle": "Pizza cotta in forno a legna, primi e secondi della tradizione romana. Tavoli all'aperto, Wi-Fi, piatti vegetariani.",
+    "subtitle": "Dal 1995, nel cuore di Roma. Cucina tradizionale e pizza cotta in forno a legna.",
     "cta": "Sfoglia il menu",
     "features": ["Tavoli all'aperto", "Piatti vegetariani", "Wi-Fi"],
     "strip": {
@@ -14,7 +14,7 @@
       "location": "Dove siamo",
       "contact": "Contatti"
     },
-    "hoursShort": "Lun 12–15 · Mar–Dom 12–15 e 19–23",
+    "hoursShort": "Pranzo e cena tutti i giorni",
     "featured": "I nostri punti di forza",
     "featuredTitle": "Forno a legna dal 1995"
   },

@@ -37,18 +37,11 @@ export default async function HomePage({
         </p>
         <Link
           href={`/${locale}/menu`}
-          className="mt-2 inline-block bg-white text-[#1a1a18] text-sm font-medium
-                     px-7 py-3 rounded-lg hover:opacity-90 transition-opacity"
+          className="mt-2 inline-block bg-white text-[#1a1a18] text-sm
+           px-5 py-2 rounded-full hover:opacity-90 transition-opacity"
         >
           {t('cta')}
         </Link>
-        <div className="flex gap-2 flex-wrap justify-center mt-1">
-          {(t.raw('features') as string[]).map((f: string) => (
-            <span key={f} className="text-xs text-white/50 border border-white/20 px-3 py-1 rounded-full">
-              {f}
-            </span>
-          ))}
-        </div>
       </section>
 
       {/* ── Strip info: 1 colonna su mobile, 3 su desktop ── */}

@@ -8,13 +8,19 @@ import RestaurantSchema from '@/components/RestaurantSchema'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.dasimonetta.it'),
   title: {
     default: 'Trattoria Da Simonetta – Cucina Romana a Roma',
     template: '%s | Trattoria Da Simonetta',
   },
   description:
-    "Trattoria in stile rétro con pizza cotta in forno a legna, primi e secondi romani. Tavoli all'aperto, Wi-Fi. Via Pontremoli 30, Roma.",
+    "Dal 1995, nel cuore di Roma. Cucina tradizionale e pizza cotta in forno a legna. Via Pontremoli 30.",
   keywords: ['trattoria roma', 'pizza forno a legna roma', 'cucina romana', 'da simonetta'],
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   openGraph: {
     type: 'website',
     locale: 'it_IT',
