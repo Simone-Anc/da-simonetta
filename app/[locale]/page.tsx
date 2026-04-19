@@ -56,25 +56,36 @@ export default async function HomePage({
           <Link
             href={`/${locale}/menu`}
             className="cta-hero"
-            style={{ marginTop: '8px', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#fff', padding: '9px 20px', border: '0.5px solid rgba(255,255,255,0.3)', borderRadius: '999px', textDecoration: 'none', transition: 'gap 0.2s ease, border-color 0.2s ease' }}
+            style={{ marginTop: '8px', display: 'inline-flex', alignItems: 'center', gap: '10px', fontSize: '14px', fontWeight: 500, color: '#1a1a18', background: '#fff', padding: '12px 28px', borderRadius: '999px', textDecoration: 'none', transition: 'gap 0.2s ease, opacity 0.2s ease' }}
           >
             {t('cta')}
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'transform 0.2s ease', flexShrink: 0 }} className="cta-arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1a1a18" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </Link>
-          <style>{`.cta-hero:hover { border-color: rgba(255,255,255,0.7) !important; gap: 14px !important; }`}</style>
+          <style>{`.cta-hero:hover { gap: 16px !important; opacity: 0.9; }`}</style>
+        </div>
+
+        {/* Info in basso dentro la hero */}
+        <div style={{ position: 'absolute', bottom: '20px', left: '24px', right: '24px', zIndex: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+          <div>
+            <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 2px' }}>
+              {locale === 'it' ? 'Orari' : 'Hours'}
+            </p>
+            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.7)', margin: 0 }}>
+              {locale === 'it' ? 'Tutti i giorni 12–15 · 19–23' : 'Every day 12–15 · 19–23'}
+            </p>
+          </div>
+          <Link href={`/${locale}/dove-siamo`} style={{ textAlign: 'right', textDecoration: 'none' }}>
+            <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 2px' }}>
+              {locale === 'it' ? 'Dove siamo' : 'Location'}
+            </p>
+            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.7)', margin: 0 }}>
+              Via Pontremoli 30 ↗
+            </p>
+          </Link>
         </div>
       </section>
-
-      {/* ── Strip info minimal ── */}
-      <div style={{ padding: '8px 16px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontSize: '11px', color: '#9a9a8a', borderBottom: '0.5px solid rgba(0,0,0,0.06)' }}>
-        <span>{locale === 'it' ? 'Aperti tutti i giorni' : 'Open every day'}</span>
-        <span style={{ opacity: 0.4 }}>·</span>
-        <Link href={`/${locale}/dove-siamo`} style={{ color: '#9a9a8a', textDecoration: 'none' }}>Via Pontremoli 30</Link>
-        <span style={{ opacity: 0.4 }}>·</span>
-        <a href="tel:+390670491589" style={{ color: '#9a9a8a', textDecoration: 'none' }}>06 7049 1589</a>
-      </div>
 
       {/* ── 3 Punti di forza — animazione slide-in ── */}
       <PuntiForza
