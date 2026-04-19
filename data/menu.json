@@ -23,7 +23,7 @@
         { "day": "Domenica",  "lunch": "12:00–15:00", "dinner": "19:00–23:00" }
       ],
       "en": [
-        { "day": "Monday",    "lunch": "12:00–15:00", "dinner": null },
+        { "day": "Monday",    "lunch": "12:00–15:00", "dinner": "19:00–23:00"},
         { "day": "Tuesday",   "lunch": "12:00–15:00", "dinner": "19:00–23:00" },
         { "day": "Wednesday", "lunch": "12:00–15:00", "dinner": "19:00–23:00" },
         { "day": "Thursday",  "lunch": "12:00–15:00", "dinner": "19:00–23:00" },

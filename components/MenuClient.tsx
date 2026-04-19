@@ -5,6 +5,9 @@ import { useTranslations } from 'next-intl'
 import { useRouter, usePathname } from 'next/navigation'
 import type { MenuItem, MenuCategory, Locale } from '@/lib/types'
 
+// Lingue disponibili — aggiungi qui quando ne aggiungi una nuova
+const LOCALES: Locale[] = ['it', 'en', 'fr', 'es', 'de']
+
 export default function MenuClient({
   categories,
   items,
@@ -19,9 +22,6 @@ export default function MenuClient({
   const scrollRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
   const pathname = usePathname()
-
-  const otherLocale: Locale = locale === 'it' ? 'en' : 'it'
-  const switchPath = pathname.replace(`/${locale}`, `/${otherLocale}`)
 
   const visibleItems =
     activeCategory === 'all'
@@ -44,19 +44,26 @@ export default function MenuClient({
             {t('title')}
           </h1>
         </div>
-        <div className="flex items-center gap-1 p-1 bg-[#e8e6e0] rounded-xl shrink-0 mt-1">
-          <button
-            onClick={() => locale !== 'it' && router.push(switchPath)}
-            className={`text-xs px-3 py-1.5 rounded-lg transition-all ${
-              locale === 'it' ? 'bg-[#f5f3ee] text-[#1a1a18] font-medium' : 'text-[#6a6a5a] hover:text-[#1a1a18]'
-            }`}
-          >IT</button>
-          <button
-            onClick={() => locale !== 'en' && router.push(switchPath)}
-            className={`text-xs px-3 py-1.5 rounded-lg transition-all ${
-              locale === 'en' ? 'bg-[#f5f3ee] text-[#1a1a18] font-medium' : 'text-[#6a6a5a] hover:text-[#1a1a18]'
-            }`}
-          >EN</button>
+
+        {/* Switcher dinamico — mostra tutte le lingue disponibili */}
+        <div className="flex items-center gap-1 p-1 bg-[#e8e6e0] rounded-xl shrink-0 mt-1 flex-wrap">
+          {LOCALES.map(l => (
+            <button
+              key={l}
+              onClick={() => {
+                if (locale !== l) {
+                  router.push(pathname.replace(`/${locale}`, `/${l}`))
+                }
+              }}
+              className={`text-xs px-3 py-1.5 rounded-lg transition-all uppercase ${
+                locale === l
+                  ? 'bg-[#f5f3ee] text-[#1a1a18] font-medium'
+                  : 'text-[#6a6a5a] hover:text-[#1a1a18]'
+              }`}
+            >
+              {l}
+            </button>
+          ))}
         </div>
       </div>
 

@@ -10,6 +10,10 @@ export const metadata: Metadata = {
     'primi e secondi romani, dolci e bevande. Via Pontremoli 30, Roma.',
 }
 
+// Rivalida la cache ogni 5 minuti
+// 100 visitatori in 5 minuti = 1 sola query a Supabase invece di 100
+export const revalidate = 300
+
 export default async function MenuPage({
   params,
 }: {

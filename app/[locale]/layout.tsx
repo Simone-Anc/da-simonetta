@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
+import { Analytics } from '@vercel/analytics/react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import RestaurantSchema from '@/components/RestaurantSchema'
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.dasimonetta.it' },
 }
 
-const locales = ['it', 'en']
+const locales = ['it', 'en', 'fr', 'es', 'de']
 
 export default async function LocaleLayout({
   children,
@@ -64,6 +65,7 @@ export default async function LocaleLayout({
           <main>{children}</main>
           <Footer />
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   )
