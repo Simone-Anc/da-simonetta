@@ -74,7 +74,7 @@ export default async function HomePage({
             {locale === 'it' ? 'Orari' : 'Hours'}
           </p>
           <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a1a18', margin: 0 }}>
-            {locale === 'it' ? 'Tutti i giorni 12–15 · 19–23' : 'Every day 12–15 · 19–23'}
+            {locale === 'it' ? 'Tutti i giorni' : 'Every day'}
           </p>
         </div>
         <Link href={`/${locale}/dove-siamo`} style={{ padding: '14px 20px', textDecoration: 'none', display: 'block' }}>
@@ -97,8 +97,6 @@ export default async function HomePage({
         eyebrow={chiSiamo.eyebrow}
         title={chiSiamo.title}
         body={chiSiamo.body}
-        cta={t('cta')}
-        locale={locale}
       />
 
       {/* ── Prenota ── */}
