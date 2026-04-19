@@ -6,15 +6,11 @@
     "email": "info@dasimonetta.it",
     "description": {
       "it": "Trattoria in stile rétro con pizza cotta in forno a legna, oltre a primi e secondi romani.",
-      "en": "Retro-style trattoria with wood-fired pizza, Roman first and second courses."
-    },
-    "features": {
-      "it": ["Tavoli all'aperto", "Piatti vegetariani", "Wi-Fi"],
-      "en": ["Outdoor seating", "Vegetarian options", "Wi-Fi"]
+      "en": "A traditional Roman trattoria with wood-fired pizza, classic first and second courses."
     },
     "hours": {
       "it": [
-        { "day": "Lunedì",    "lunch": "12:00–15:00", "dinner": "19:00–23:00"  },
+        { "day": "Lunedì",    "lunch": "12:00–15:00", "dinner": "19:00–23:00" },
         { "day": "Martedì",   "lunch": "12:00–15:00", "dinner": "19:00–23:00" },
         { "day": "Mercoledì", "lunch": "12:00–15:00", "dinner": "19:00–23:00" },
         { "day": "Giovedì",   "lunch": "12:00–15:00", "dinner": "19:00–23:00" },
@@ -23,7 +19,7 @@
         { "day": "Domenica",  "lunch": "12:00–15:00", "dinner": "19:00–23:00" }
       ],
       "en": [
-        { "day": "Monday",    "lunch": "12:00–15:00", "dinner": "19:00–23:00"},
+        { "day": "Monday",    "lunch": "12:00–15:00", "dinner": "19:00–23:00" },
         { "day": "Tuesday",   "lunch": "12:00–15:00", "dinner": "19:00–23:00" },
         { "day": "Wednesday", "lunch": "12:00–15:00", "dinner": "19:00–23:00" },
         { "day": "Thursday",  "lunch": "12:00–15:00", "dinner": "19:00–23:00" },
@@ -32,193 +28,5 @@
         { "day": "Sunday",    "lunch": "12:00–15:00", "dinner": "19:00–23:00" }
       ]
     }
-  },
-  "categories": [
-    {
-      "id": "antipasti",
-      "label": { "it": "Antipasti", "en": "Appetizers" },
-      "items": [
-        { "id": "suppli",             "name": { "it": "Supplì",                                    "en": "Supplì" },                                         "price": 2.00 },
-        { "id": "crocchette",         "name": { "it": "Crocchette",                                "en": "Croquettes" },                                     "price": 1.50 },
-        { "id": "fiori-zucca",        "name": { "it": "Fiori di zucca",                            "en": "Zucchini Flowers" },                               "price": 2.00 },
-        { "id": "baccala-filetti",    "name": { "it": "Filetti di baccalà",                        "en": "Cod Fillets" },                                    "price": 4.00 },
-        { "id": "alici-fritte",       "name": { "it": "Alici fritte",                              "en": "Fried Anchovies" },                                "price": 4.00 },
-        { "id": "olive-ascolane",     "name": { "it": "Olive ascolane (5 pz)",                     "en": "Ascolana Olives (5 pcs)" },                        "price": 4.00 },
-        { "id": "palline-mozzarella", "name": { "it": "Palline di mozzarella (5 pz)",              "en": "Mozzarella Balls (5 pcs)" },                       "price": 2.00 },
-        { "id": "bruschetta-olio",    "name": { "it": "Bruschetta con sale e olio",                "en": "Bruschetta with Salt and Oil" },                   "price": 2.50 },
-        { "id": "bruschetta-pomodoro","name": { "it": "Bruschetta al pomodoro",                    "en": "Bruschetta with Tomato" },                         "price": 3.00 },
-        { "id": "bruschetta-rucola",  "name": { "it": "Bruschetta pomodoro e rucola",              "en": "Bruschetta with Tomato and Rocket" },              "price": 4.00 },
-        { "id": "antipasto-italiano", "name": { "it": "Antipasto italiano",                        "en": "Italian Appetizer" },                              "price": 7.00 },
-        { "id": "prosciutto-crudo",   "name": { "it": "Prosciutto crudo",                         "en": "Raw Ham" },                                        "price": 7.00 },
-        { "id": "prosciutto-melone",  "name": { "it": "Prosciutto e melone",                      "en": "Ham and Melon" },                                  "price": 7.00 },
-        { "id": "prosciutto-formaggio","name": { "it": "Prosciutto e formaggio",                  "en": "Ham and Cheese" },                                 "price": 7.00 },
-        { "id": "salame-formaggio",   "name": { "it": "Salame e formaggio",                       "en": "Salami and Cheese" },                              "price": 7.00 },
-        { "id": "mozzarella-bufala",  "name": { "it": "Mozzarella di bufala (250g)",              "en": "Buffalo Mozzarella (250g)" },                      "price": 7.00 },
-        { "id": "antipasto-mare",     "name": { "it": "Antipasto di mare",                        "en": "Seafood Appetizer" },                              "price": 10.00 },
-        { "id": "carpaccio-bresaola", "name": { "it": "Carpaccio con bresaola, rucola e parmigiano","en": "Carpaccio with Bresaola, Rocket and Parmesan" }, "price": 10.00 }
-      ]
-    },
-    {
-      "id": "primi",
-      "label": { "it": "Primi piatti", "en": "First Courses" },
-      "items": [
-        { "id": "lasagna-ragu",        "name": { "it": "Lasagna al ragù",                "en": "Lasagna with Ragù" },                "price": 10.00 },
-        { "id": "lasagna-veg",         "name": { "it": "Lasagna vegetariana",            "en": "Vegetarian Lasagna" },              "price": 10.00, "vegetarian": true },
-        { "id": "cannelloni",          "name": { "it": "Cannelloni",                     "en": "Cannelloni" },                      "price": 10.00 },
-        { "id": "fettuccine",          "name": { "it": "Fettuccine",                     "en": "Fettuccine" },                      "price": 10.00 },
-        { "id": "gnocchi",             "name": { "it": "Gnocchi",                        "en": "Gnocchi" },                         "price": 10.00 },
-        { "id": "ravioli",             "name": { "it": "Ravioli",                        "en": "Ravioli" },                         "price": 12.00 },
-        { "id": "rigatoni-pajata",     "name": { "it": "Rigatoni alla pajata",           "en": "Rigatoni alla Pajata" },            "price": 12.00 },
-        { "id": "fettuccine-porcini",  "name": { "it": "Fettuccine ai funghi porcini",  "en": "Fettuccine with Porcini Mushrooms" },"price": 12.00 },
-        { "id": "amatriciana",         "name": { "it": "Amatriciana",                   "en": "Amatriciana" },                     "price": 10.00 },
-        { "id": "carbonara",           "name": { "it": "Carbonara",                     "en": "Carbonara" },                       "price": 10.00 },
-        { "id": "gricia",              "name": { "it": "Gricia",                         "en": "Gricia" },                          "price": 10.00 },
-        { "id": "cacio-pepe",          "name": { "it": "Cacio e pepe",                  "en": "Cacio e Pepe" },                    "price": 10.00 },
-        { "id": "arrabbiata",          "name": { "it": "Arrabbiata",                    "en": "Arrabbiata" },                      "price": 10.00 },
-        { "id": "pomodoro-basilico",   "name": { "it": "Pomodoro e basilico",           "en": "Tomato and Basil" },                "price": 10.00, "vegetarian": true },
-        { "id": "ragu-bolognese",      "name": { "it": "Ragù bolognese",                "en": "Bolognese Ragù" },                  "price": 10.00 },
-        { "id": "pasta-tonno",         "name": { "it": "Pasta al tonno",                "en": "Pasta with Tuna" },                 "price": 10.00 },
-        { "id": "spaghetti-vongole",   "name": { "it": "Spaghetti alle vongole",        "en": "Spaghetti with Clams" },            "price": 14.00 },
-        { "id": "pasta-ceci",          "name": { "it": "Pasta e ceci",                  "en": "Pasta and Chickpeas" },             "price": 10.00 },
-        { "id": "pasta-fagioli",       "name": { "it": "Pasta e fagioli",               "en": "Pasta and Beans" },                 "price": 10.00 },
-        { "id": "minestra-verdure",    "name": { "it": "Minestra di verdure",           "en": "Vegetable Soup" },                  "price": 10.00, "vegetarian": true },
-        { "id": "minestrone",          "name": { "it": "Minestrone",                    "en": "Minestrone" },                      "price": 10.00, "vegetarian": true },
-        { "id": "sugo-coda",           "name": { "it": "Sugo alla coda",                "en": "Oxtail Sauce" },                    "price": 12.00 }
-      ]
-    },
-    {
-      "id": "pizza",
-      "label": { "it": "Pizza", "en": "Pizza" },
-      "items": [
-        { "id": "marinara",        "name": { "it": "Marinara",        "en": "Marinara" },        "price": 7.00,  "description": { "it": "Pomodoro, aglio, origano",                                                               "en": "Tomato, garlic, oregano" } },
-        { "id": "margherita",      "name": { "it": "Margherita",      "en": "Margherita" },      "price": 7.00,  "description": { "it": "Pomodoro, mozzarella, basilico",                                                         "en": "Tomato, mozzarella, basil" } },
-        { "id": "napoletana",      "name": { "it": "Napoletana",      "en": "Napoletana" },      "price": 7.00,  "description": { "it": "Pomodoro, mozzarella, acciughe",                                                         "en": "Tomato, mozzarella, anchovies" } },
-        { "id": "funghi",          "name": { "it": "Funghi",          "en": "Funghi" },          "price": 7.00,  "description": { "it": "Pomodoro, mozzarella, funghi",                                                           "en": "Tomato, mozzarella, mushrooms" } },
-        { "id": "francescana",     "name": { "it": "Francescana",     "en": "Francescana" },     "price": 7.00,  "description": { "it": "Pomodoro, mozzarella, prosciutto",                                                       "en": "Tomato, mozzarella, ham" } },
-        { "id": "san-daniele",     "name": { "it": "San Daniele",     "en": "San Daniele" },     "price": 8.50,  "description": { "it": "Mozzarella, rucola, prosciutto crudo",                                                   "en": "Mozzarella, rocket, raw ham" } },
-        { "id": "capricciosa",     "name": { "it": "Capricciosa",     "en": "Capricciosa" },     "price": 8.00,  "description": { "it": "Pomodoro, mozzarella, funghi, salsiccia, uovo sodo, salame, olive, acciughe",            "en": "Tomato, mozzarella, mushrooms, sausage, egg, salami, olives, anchovies" } },
-        { "id": "quattro-stagioni","name": { "it": "4 Stagioni",      "en": "4 Seasons" },       "price": 8.00,  "description": { "it": "Pomodoro, mozzarella, funghi, carciofi, olive, prosciutto",                             "en": "Tomato, mozzarella, mushrooms, artichokes, olives, ham" } },
-        { "id": "fiori-zucca-pizza","name": { "it": "Fiori di zucca", "en": "Fiori di Zucca" }, "price": 8.00,  "description": { "it": "Mozzarella, fiori di zucca, acciughe",                                                  "en": "Mozzarella, courgette flowers, anchovies" } },
-        { "id": "diavola",         "name": { "it": "Diavola",         "en": "Diavola" },         "price": 8.00,  "description": { "it": "Pomodoro, mozzarella, salame piccante",                                                  "en": "Tomato, mozzarella, spicy salami" } },
-        { "id": "boscaiola",       "name": { "it": "Boscaiola",       "en": "Boscaiola" },       "price": 8.00,  "description": { "it": "Pomodoro, mozzarella, salsiccia, funghi",                                               "en": "Tomato, mozzarella, sausage, mushrooms" } },
-        { "id": "peperoni-pizza",  "name": { "it": "Peperoni",        "en": "Peppers" },         "price": 8.00,  "description": { "it": "Pomodoro, mozzarella, peperoni",                                                         "en": "Tomato, mozzarella, peppers" } },
-        { "id": "zucchine",        "name": { "it": "Zucchine",        "en": "Zucchini" },        "price": 8.00,  "description": { "it": "Pomodoro, mozzarella, zucchine",                                                         "en": "Tomato, mozzarella, zucchini" } },
-        { "id": "melanzane-pizza", "name": { "it": "Melanzane",       "en": "Eggplant" },        "price": 8.00,  "description": { "it": "Pomodoro, mozzarella, melanzane",                                                        "en": "Tomato, mozzarella, eggplant" } },
-        { "id": "contadina",       "name": { "it": "Contadina",       "en": "Contadina" },       "price": 8.50,  "description": { "it": "Mozzarella, cicoria, parmigiano",                                                        "en": "Mozzarella, chicory, parmesan" } },
-        { "id": "campagnola",      "name": { "it": "Campagnola",      "en": "Campagnola" },      "price": 8.50,  "description": { "it": "Mozzarella, salsiccia, rucola, pomodoro fresco, parmigiano",                            "en": "Mozzarella, sausage, rocket, fresh tomato, parmesan" } },
-        { "id": "sinagoga",        "name": { "it": "Sinagoga",        "en": "Sinagoga" },        "price": 8.50,  "description": { "it": "Bresaola, mozzarella, rucola, parmigiano",                                              "en": "Bresaola, mozzarella, rocket, parmesan" } },
-        { "id": "wurstel",         "name": { "it": "Würstel",         "en": "Würstel" },         "price": 8.50,  "description": { "it": "Pomodoro, mozzarella, würstel",                                                          "en": "Tomato, mozzarella, sausage" } },
-        { "id": "burina",          "name": { "it": "Burina",          "en": "Burina" },          "price": 8.50,  "description": { "it": "Mozzarella, broccoli, salsiccia",                                                        "en": "Mozzarella, broccoli, sausage" } },
-        { "id": "vesuvio",         "name": { "it": "Vesuvio",         "en": "Vesuvio" },         "price": 8.50,  "description": { "it": "½ calzone, ½ pizza con funghi, broccoli, salsiccia",                                    "en": "½ calzone, ½ pizza with mushrooms, broccoli, sausage" } },
-        { "id": "antonio",         "name": { "it": "Antonio Lo Stagnino","en": "Antonio Lo Stagnino" },"price": 8.50,"description": { "it": "Pomodoro fresco, mozzarella, capperi, olive nere, acciughe",                    "en": "Fresh tomato, mozzarella, capers, black olives, anchovies" } },
-        { "id": "quattro-formaggi","name": { "it": "4 Formaggi",      "en": "4 Cheeses" },       "price": 8.00,  "description": { "it": "Mozzarella, gorgonzola, gruyère, parmigiano",                                           "en": "Mozzarella, gorgonzola, gruyère, parmesan" } },
-        { "id": "tonno-pizza",     "name": { "it": "Tonno",           "en": "Tuna" },            "price": 8.50,  "description": { "it": "Pomodoro, tonno",                                                                         "en": "Tomato, tuna" } },
-        { "id": "calzone",         "name": { "it": "Calzone",         "en": "Calzone" },         "price": 8.00 },
-        { "id": "focaccia",        "name": { "it": "Focaccia",        "en": "Focaccia" },        "price": 3.00 },
-        { "id": "focaccia-prosciutto","name": { "it": "Focaccia con prosciutto","en": "Focaccia with Ham" },"price": 7.00 }
-      ]
-    },
-    {
-      "id": "secondi",
-      "label": { "it": "Secondi piatti", "en": "Second Courses" },
-      "items": [
-        { "id": "lombata-vitello",   "name": { "it": "Lombata di vitello",      "en": "Veal Loin" },               "price": 14.00 },
-        { "id": "bistecca-manzo",    "name": { "it": "Bistecca di manzo",       "en": "Beef Steak" },              "price": 15.00 },
-        { "id": "arista-forno",      "name": { "it": "Arista al forno",         "en": "Baked Arista" },            "price": 10.00 },
-        { "id": "maialino-forno",    "name": { "it": "Maialino al forno",       "en": "Roast Suckling Pig" },      "price": 14.00 },
-        { "id": "petto-vitello",     "name": { "it": "Petto di vitello",        "en": "Veal Breast" },             "price": 14.00 },
-        { "id": "pollo-cacciatora",  "name": { "it": "Pollo alla cacciatora",   "en": "Chicken Cacciatore" },      "price": 8.00 },
-        { "id": "pollo-peperoni",    "name": { "it": "Pollo con peperoni",      "en": "Chicken with Peppers" },    "price": 9.00 },
-        { "id": "polpette",          "name": { "it": "Polpette fritte/al sugo", "en": "Meatballs Fried/Tomato Sauce" },"price": 8.00 },
-        { "id": "polpettone",        "name": { "it": "Polpettone",              "en": "Meatloaf" },                "price": 9.00 },
-        { "id": "costine-salsicce",  "name": { "it": "Costine e salsicce",      "en": "Ribs and Sausages" },       "price": 9.00 },
-        { "id": "cotoletta",         "name": { "it": "Cotoletta",               "en": "Milanese Cutlet" },         "price": 8.00 },
-        { "id": "parmigiana",        "name": { "it": "Parmigiana di melanzane", "en": "Eggplant Parmigiana" },     "price": 9.00, "vegetarian": true },
-        { "id": "coratella-abbacchio","name": { "it": "Coratella d'abbacchio",  "en": "Lamb Offal" },              "price": 12.00 },
-        { "id": "trippa-romana",     "name": { "it": "Trippa alla romana",      "en": "Roman Tripe" },             "price": 12.00 },
-        { "id": "coda-vaccinara",    "name": { "it": "Coda alla vaccinara",     "en": "Coda alla Vaccinara" },     "price": 12.00, "note": { "it": "Solo su prenotazione", "en": "Only on preorder" } }
-      ]
-    },
-    {
-      "id": "secondi-mare",
-      "label": { "it": "Secondi di mare", "en": "Second Courses – Fish" },
-      "items": [
-        { "id": "soutè-cozze",      "name": { "it": "Soutè di cozze e vongole", "en": "Sauté of Mussels and Clams" }, "price": 12.00 },
-        { "id": "seppie-piselli",   "name": { "it": "Seppie e piselli",         "en": "Cuttlefish and Peas" },         "price": 12.00 },
-        { "id": "baccala-livornese","name": { "it": "Baccalà alla livornese",   "en": "Cod Livorno-Style" },           "price": 14.00 },
-        { "id": "moscardini-fagioli","name": { "it": "Moscardini e fagioli",    "en": "Baby Octopus and Beans" },      "price": 12.00 },
-        { "id": "calamari-fritti",  "name": { "it": "Calamari fritti",          "en": "Fried Squid" },                 "price": 14.00, "note": { "it": "Può essere surgelato", "en": "May be frozen" } }
-      ]
-    },
-    {
-      "id": "contorni",
-      "label": { "it": "Contorni", "en": "Side Dishes" },
-      "items": [
-        { "id": "patate-forno",   "name": { "it": "Patate al forno",      "en": "Baked Potatoes" },   "price": 4.00 },
-        { "id": "patatine-fritte","name": { "it": "Patatine fritte",      "en": "French Fries" },     "price": 4.00, "note": { "it": "Può essere surgelato", "en": "May be frozen" } },
-        { "id": "cicoria",        "name": { "it": "Cicoria",              "en": "Cicoria" },           "price": 4.00 },
-        { "id": "broccoli",       "name": { "it": "Broccoli",             "en": "Broccoli" },          "price": 4.00, "vegetarian": true },
-        { "id": "melanzane-grigliate","name": { "it": "Melanzane grigliate","en": "Grilled Eggplant" },"price": 4.00, "vegetarian": true },
-        { "id": "insalata-mista", "name": { "it": "Insalata mista",       "en": "Mixed Salad" },       "price": 4.00, "vegetarian": true }
-      ]
-    },
-    {
-      "id": "dolci",
-      "label": { "it": "Dolci", "en": "Desserts" },
-      "items": [
-        { "id": "tiramisu",       "name": { "it": "Tiramisù",          "en": "Tiramisù" },      "price": 4.00 },
-        { "id": "panna-cotta",    "name": { "it": "Panna cotta",       "en": "Panna Cotta" },   "price": 4.00 },
-        { "id": "sorbetto",       "name": { "it": "Sorbetto",          "en": "Sorbet" },        "price": 4.00, "note": { "it": "Limone / mandarino / mela verde", "en": "Lemon / mandarin / green apple" } },
-        { "id": "tartufo",        "name": { "it": "Tartufo",           "en": "Tartufo" },       "price": 4.00 },
-        { "id": "dolci-vari",     "name": { "it": "Dolci vari",        "en": "Various Sweets" },"price": 4.00 },
-        { "id": "frutta",         "name": { "it": "Frutta di stagione","en": "Seasonal Fruit" },"price": 4.00 }
-      ]
-    },
-    {
-      "id": "bevande",
-      "label": { "it": "Bevande", "en": "Beverages" },
-      "items": [
-        { "id": "acqua-1lt",        "name": { "it": "Acqua 1 Lt",                "en": "Water 1 Lt" },                  "price": 2.00 },
-        { "id": "acqua-05lt",       "name": { "it": "Acqua ½ Lt",               "en": "Water ½ Lt" },                  "price": 1.50 },
-        { "id": "coca-1lt",         "name": { "it": "Coca Cola 1 Lt",            "en": "Coca Cola 1 Lt" },              "price": 4.00 },
-        { "id": "bibita-lattina",   "name": { "it": "Coca/Fanta/Sprite in lattina","en": "Coke/Fanta/Sprite in a can" },      "price": 2.00 },
-        { "id": "spritz",           "name": { "it": "Spritz",                    "en": "Spritz" },                      "price": 5.00 },
-        { "id": "birra-spina-02",   "name": { "it": "Birra alla spina 0,20 Lt",  "en": "Draft Beer 0.20 Lt" },         "price": 3.00 },
-        { "id": "birra-spina-04",   "name": { "it": "Birra alla spina 0,40 Lt",  "en": "Draft Beer 0.40 Lt" },         "price": 4.00 },
-        { "id": "birra-bottiglia-033","name": { "it": "Birra bottiglia 0,33 Lt", "en": "Bottled Beer 0.33 Lt" },       "price": 2.00 },
-        { "id": "birra-bottiglia-066","name": { "it": "Birra bottiglia 0,66 Lt", "en": "Bottled Beer 0.66 Lt" },       "price": 3.00 },
-        { "id": "vino-calice",      "name": { "it": "Calice di vino della casa", "en": "Glass of House Wine" },        "price": 3.00 },
-        { "id": "vino-casa-025",    "name": { "it": "Vino della casa B/R ¼ Lt",  "en": "House Wine White/Red ¼ Lt" },  "price": 3.00 },
-        { "id": "vino-casa-05",     "name": { "it": "Vino della casa B/R ½ Lt",  "en": "House Wine White/Red ½ Lt" },  "price": 4.00 },
-        { "id": "vino-casa-1lt",    "name": { "it": "Vino della casa B/R 1 Lt",  "en": "House Wine White/Red 1 Lt" },  "price": 8.00 }
-      ]
-    },
-    {
-      "id": "vini",
-      "label": { "it": "Vini in bottiglia", "en": "Wine Bottles" },
-      "subcategories": [
-        {
-          "label": { "it": "Vini bianchi", "en": "White Wines" },
-          "items": [
-            { "id": "pecorino",   "name": { "it": "Pecorino 0,75 Lt",    "en": "Pecorino 0.75 Lt" },    "price": 12.00 },
-            { "id": "falanghina","name": { "it": "Falanghina 0,75 Lt",   "en": "Falanghina 0.75 Lt" },  "price": 12.00 },
-            { "id": "verdicchio","name": { "it": "Verdicchio 0,75 Lt",   "en": "Verdicchio 0.75 Lt" },  "price": 12.00 },
-            { "id": "bianco-025","name": { "it": "Vino bianco 0,25 Lt",  "en": "White wine 0.25 Lt" },  "price": 3.50 },
-            { "id": "prosecco",  "name": { "it": "Prosecco 0,75 Lt",     "en": "Prosecco 0.75 Lt" },    "price": 14.00 },
-            { "id": "prosecco-calice","name": { "it": "Calice di prosecco","en": "Glass of Prosecco" }, "price": 4.00 }
-          ]
-        },
-        {
-          "label": { "it": "Vini rossi", "en": "Red Wines" },
-          "items": [
-            { "id": "chianti",        "name": { "it": "Chianti 0,75 Lt",         "en": "Chianti 0.75 Lt" },        "price": 12.00 },
-            { "id": "montepulciano",  "name": { "it": "Montepulciano 0,75 Lt",   "en": "Montepulciano 0.75 Lt" },  "price": 12.00 },
-            { "id": "nero-davola",    "name": { "it": "Nero d'Avola 0,75 Lt",    "en": "Nero d'Avola 0.75 Lt" },   "price": 12.00 },
-            { "id": "rosso-025",      "name": { "it": "Vino rosso 0,25 Lt",      "en": "Red wine 0.25 Lt" },       "price": 3.50 },
-            { "id": "lambrusco",      "name": { "it": "Lambrusco 0,75 Lt",       "en": "Lambrusco 0.75 Lt" },      "price": 14.00 }
-          ]
-        }
-      ]
-    }
-  ]
+  }
 }

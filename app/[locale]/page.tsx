@@ -55,36 +55,33 @@ export default async function HomePage({
           </p>
           <Link
             href={`/${locale}/menu`}
-            style={{ marginTop: '8px', display: 'inline-block', background: '#fff', color: '#1a1a18', fontSize: '13px', fontWeight: 500, padding: '10px 24px', borderRadius: '999px', textDecoration: 'none' }}
+            className="cta-hero"
+            style={{ marginTop: '8px', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: '#fff', padding: '9px 20px', border: '0.5px solid rgba(255,255,255,0.3)', borderRadius: '999px', textDecoration: 'none', transition: 'gap 0.2s ease, border-color 0.2s ease' }}
           >
             {t('cta')}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'transform 0.2s ease', flexShrink: 0 }} className="cta-arrow">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
           </Link>
+          <style>{`.cta-hero:hover { border-color: rgba(255,255,255,0.7) !important; gap: 14px !important; }`}</style>
         </div>
       </section>
 
-      {/* ── Strip info — sfondo caldo con icone ── */}
-      <section style={{ background: '#f0ede8', display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', borderTop: '0.5px solid rgba(0,0,0,0.08)', borderBottom: '0.5px solid rgba(0,0,0,0.08)' }}>
-        <div style={{ padding: '16px 20px', borderRight: '0.5px solid rgba(0,0,0,0.08)' }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.45, marginBottom: '8px', display: 'block' }}>
-            <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/>
-          </svg>
-          <p style={{ fontSize: '10px', color: '#9a9a8a', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '3px' }}>{t('strip.hours')}</p>
-          <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a1a18', margin: 0 }}>{t('hoursShort')}</p>
+      {/* ── Strip info — banner scuro compatto ── */}
+      <section style={{ background: '#1a1a18', display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '14px 16px', gap: '8px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+          <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>{t('strip.hours')}</p>
+          <p style={{ fontSize: '12px', fontWeight: 500, color: '#fff', margin: 0 }}>{t('hoursShort')}</p>
         </div>
-        <div style={{ padding: '16px 20px', borderRight: '0.5px solid rgba(0,0,0,0.08)' }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.45, marginBottom: '8px', display: 'block' }}>
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/>
-          </svg>
-          <p style={{ fontSize: '10px', color: '#9a9a8a', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '3px' }}>{t('strip.location')}</p>
-          <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a1a18', margin: '0 0 2px' }}>Via Pontremoli 30</p>
-          <p style={{ fontSize: '11px', color: '#6a6a5a', margin: 0 }}>Roma RM</p>
-        </div>
-        <div style={{ padding: '16px 20px' }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.45, marginBottom: '8px', display: 'block' }}>
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.02 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
-          </svg>
-          <p style={{ fontSize: '10px', color: '#9a9a8a', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '3px' }}>{t('strip.contact')}</p>
-          <a href="tel:+390670491589" style={{ fontSize: '13px', fontWeight: 500, color: '#1a1a18', textDecoration: 'none' }}>
+        <div style={{ width: '0.5px', background: 'rgba(255,255,255,0.1)', alignSelf: 'stretch' }} />
+        <Link href={`/${locale}/dove-siamo`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', textDecoration: 'none' }}>
+          <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>{t('strip.location')}</p>
+          <p style={{ fontSize: '12px', fontWeight: 500, color: '#fff', margin: 0 }}>Via Pontremoli 30 ↗</p>
+        </Link>
+        <div style={{ width: '0.5px', background: 'rgba(255,255,255,0.1)', alignSelf: 'stretch' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+          <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>{t('strip.contact')}</p>
+          <a href="tel:+390670491589" style={{ fontSize: '12px', fontWeight: 500, color: '#fff', textDecoration: 'none' }}>
             06 7049 1589
           </a>
         </div>

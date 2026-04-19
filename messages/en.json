@@ -5,8 +5,8 @@
   },
   "home": {
     "eyebrow": "Rome, traditional cuisine",
-    "title": "Retro-style Trattoria",
-    "subtitle": "Wood-fired pizza, classic Roman first and second courses. Outdoor seating, Wi-Fi, vegetarian options.",
+    "title": "Trattoria Da Simonetta",
+    "subtitle": "Since 1995, in the heart of Rome. Traditional cuisine and wood-fired pizza.",
     "cta": "Browse the menu",
     "features": ["Outdoor seating", "Vegetarian options", "Wi-Fi"],
     "strip": {
@@ -15,15 +15,15 @@
       "contact": "Contact"
     },
     "hoursShort": "Lunch and dinner every day",
-    "featured": "What we are known for",
-    "featuredTitle": "Wood-fired oven since 1987"
+    "featured": "Our highlights",
+    "featuredTitle": "Wood-fired oven since 1995"
   },
   "menu": {
     "eyebrow": "Roman cuisine",
     "title": "Our menu",
     "all": "All",
     "vegetarian": "Vegetarian",
-    "note": "In the absence of fresh produce, some ingredients may be frozen.",
+    "note": "When fresh produce is unavailable, some ingredients may be frozen.",
     "onRequest": "Only on preorder"
   },
   "location": {
@@ -40,6 +40,6 @@
     "qrSub": "Scan to open the menu in your language."
   },
   "footer": {
-    "copy": "© 2025 Trattoria Da Simonetta · Via Pontremoli 30, Rome"
+    "copy": "© 2026 Trattoria Da Simonetta · Via Pontremoli 30, Rome"
   }
 }
