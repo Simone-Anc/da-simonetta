@@ -12,13 +12,13 @@ export default async function HomePage({
   const t = await getTranslations({ locale, namespace: 'home' })
 
   const punti = locale === 'it' ? [
-    { icon: '🍝', title: 'Cucina tradizionale romana', desc: 'Ricette della nonna, tramandate di generazione in generazione. Sapori autentici che raccontano Roma.' },
-    { icon: '🫳', title: 'Pasta fatta a mano', desc: 'Ogni giorno impastiamo a mano. Tonnarelli, rigatoni e gnocchi preparati con farina e uova fresche.' },
-    { icon: '🍕', title: 'Pizza cotta in forno a legna', desc: 'Il nostro forno a legna brucia dal 1995. Impasto a lunga lievitazione, cornicione croccante.' },
+    {  title: 'Cucina tradizionale romana', desc: 'Ricette della nonna, tramandate di generazione in generazione. Sapori autentici che raccontano Roma.' },
+    {  title: 'Pasta fatta a mano', desc: 'Ogni giorno impastiamo a mano. Tonnarelli, rigatoni e gnocchi preparati con farina e uova fresche.' },
+    {  title: 'Pizza cotta in forno a legna', desc: 'Il nostro forno a legna brucia dal 1995. Impasto a lunga lievitazione, cornicione croccante.' },
   ] : [
-    { icon: '🍝', title: 'Traditional Roman cuisine', desc: 'Grandma\'s recipes, passed down through generations. Authentic flavours that tell the story of Rome.' },
-    { icon: '🫳', title: 'Handmade pasta', desc: 'We knead by hand every day. Tonnarelli, rigatoni and gnocchi made with fresh flour and eggs.' },
-    { icon: '🍕', title: 'Wood-fired pizza', desc: 'Our wood-fired oven has been burning since 1995. Long-leavened dough, crispy crust.' },
+    {  title: 'Traditional Roman cuisine', desc: 'Grandma\'s recipes, passed down through generations. Authentic flavours that tell the story of Rome.' },
+    {  title: 'Handmade pasta', desc: 'We knead by hand every day. Tonnarelli, rigatoni and gnocchi made with fresh flour and eggs.' },
+    {  title: 'Wood-fired pizza', desc: 'Our wood-fired oven has been burning since 1995. Long-leavened dough, crispy crust.' },
   ]
 
   const chiSiamo = locale === 'it' ? {
@@ -90,7 +90,6 @@ export default async function HomePage({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
           {punti.map(p => (
             <div key={p.title} className="flex flex-col gap-3">
-              <span style={{ fontSize: '2rem' }}>{p.icon}</span>
               <h3 className="text-base font-medium" style={{ fontFamily: "'Fraunces', serif" }}>
                 {p.title}
               </h3>
