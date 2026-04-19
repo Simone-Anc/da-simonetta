@@ -67,25 +67,14 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* ── Strip info — banner scuro compatto ── */}
-      <section style={{ background: '#1a1a18', display: 'flex', justifyContent: 'space-around', alignItems: 'center', padding: '14px 16px', gap: '8px' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-          <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>{t('strip.hours')}</p>
-          <p style={{ fontSize: '12px', fontWeight: 500, color: '#fff', margin: 0 }}>{t('hoursShort')}</p>
-        </div>
-        <div style={{ width: '0.5px', background: 'rgba(255,255,255,0.1)', alignSelf: 'stretch' }} />
-        <Link href={`/${locale}/dove-siamo`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', textDecoration: 'none' }}>
-          <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>{t('strip.location')}</p>
-          <p style={{ fontSize: '12px', fontWeight: 500, color: '#fff', margin: 0 }}>Via Pontremoli 30 ↗</p>
-        </Link>
-        <div style={{ width: '0.5px', background: 'rgba(255,255,255,0.1)', alignSelf: 'stretch' }} />
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-          <p style={{ fontSize: '9px', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>{t('strip.contact')}</p>
-          <a href="tel:+390670491589" style={{ fontSize: '12px', fontWeight: 500, color: '#fff', textDecoration: 'none' }}>
-            06 7049 1589
-          </a>
-        </div>
-      </section>
+      {/* ── Strip info minimal ── */}
+      <div style={{ padding: '8px 16px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontSize: '11px', color: '#9a9a8a', borderBottom: '0.5px solid rgba(0,0,0,0.06)' }}>
+        <span>{locale === 'it' ? 'Aperti tutti i giorni' : 'Open every day'}</span>
+        <span style={{ opacity: 0.4 }}>·</span>
+        <Link href={`/${locale}/dove-siamo`} style={{ color: '#9a9a8a', textDecoration: 'none' }}>Via Pontremoli 30</Link>
+        <span style={{ opacity: 0.4 }}>·</span>
+        <a href="tel:+390670491589" style={{ color: '#9a9a8a', textDecoration: 'none' }}>06 7049 1589</a>
+      </div>
 
       {/* ── 3 Punti di forza — animazione slide-in ── */}
       <PuntiForza
