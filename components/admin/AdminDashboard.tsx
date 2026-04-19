@@ -1,63 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import type { MenuItem, MenuCategory } from '@/lib/types'
 
 const LANGS = ['it', 'en', 'fr', 'es', 'de'] as const
-const LANG_FLAGS: Record<string, string> = { it: '🇮🇹 IT', en: '🇬🇧 EN', fr: '🇫🇷 FR', es: '🇪🇸 ES', de: '🇩🇪 DE' }
+const LANG_LABELS: Record<string, string> = { it: '🇮🇹 IT', en: '🇬🇧 EN', fr: '🇫🇷 FR', es: '🇪🇸 ES', de: '🇩🇪 DE' }
 
-const s: Record<string, React.CSSProperties> = {
-  wrap: { minHeight: '100vh', background: '#f5f3ee' },
-  topbar: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 20px', borderBottom: '0.5px solid rgba(0,0,0,0.1)', background: '#fff' },
-  logo: { fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: '16px', color: '#1a1a18' },
-  badge: { fontSize: '10px', padding: '2px 8px', borderRadius: '20px', background: '#f0ede8', color: '#6a6a5a', marginLeft: '8px' },
-  logoutBtn: { fontSize: '12px', color: '#6a6a5a', border: '0.5px solid rgba(0,0,0,0.15)', padding: '5px 12px', borderRadius: '8px', cursor: 'pointer', background: 'none' },
-  content: { padding: '20px' },
-  stats: { display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', marginBottom: '16px' },
-  stat: { background: '#fff', border: '0.5px solid rgba(0,0,0,0.08)', borderRadius: '10px', padding: '12px 14px' },
-  statN: { fontSize: '22px', fontWeight: 500, color: '#1a1a18' },
-  statL: { fontSize: '11px', color: '#6a6a5a', marginTop: '2px' },
-  toolbar: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', gap: '8px', flexWrap: 'wrap' as const },
-  toolbarLeft: { display: 'flex', gap: '6px', flexWrap: 'wrap' as const },
-  select: { fontSize: '12px', padding: '6px 10px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', color: '#1a1a18' },
-  searchInput: { fontSize: '12px', padding: '6px 10px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', color: '#1a1a18', width: '150px' },
-  addBtn: { fontSize: '12px', fontWeight: 500, padding: '6px 14px', background: '#1a1a18', color: '#f5f3ee', border: 'none', borderRadius: '8px', cursor: 'pointer', whiteSpace: 'nowrap' as const },
-  table: { width: '100%', borderCollapse: 'collapse' as const, fontSize: '13px', background: '#fff', borderRadius: '12px', overflow: 'hidden', border: '0.5px solid rgba(0,0,0,0.08)' },
-  th: { textAlign: 'left' as const, fontSize: '11px', fontWeight: 500, color: '#6a6a5a', textTransform: 'uppercase' as const, letterSpacing: '.05em', padding: '8px 12px', borderBottom: '0.5px solid rgba(0,0,0,0.08)' },
-  td: { padding: '10px 12px', borderBottom: '0.5px solid rgba(0,0,0,0.06)', verticalAlign: 'middle' as const },
-  nameIt: { fontWeight: 500, color: '#1a1a18', fontSize: '13px' },
-  nameEn: { fontSize: '11px', color: '#6a6a5a', marginTop: '1px' },
-  catPill: { fontSize: '10px', padding: '2px 8px', borderRadius: '20px', background: '#f0ede8', color: '#6a6a5a', whiteSpace: 'nowrap' as const },
-  price: { fontWeight: 500, color: '#1a1a18', whiteSpace: 'nowrap' as const },
-  langDots: { display: 'flex', gap: '3px' },
-  dot: { width: '20px', height: '20px', borderRadius: '50%', fontSize: '8px', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#d4edda', color: '#276339' },
-  dotMissing: { width: '20px', height: '20px', borderRadius: '50%', fontSize: '8px', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f0ede8', color: '#9a9a8a' },
-  acts: { display: 'flex', gap: '5px' },
-  btnE: { fontSize: '11px', padding: '4px 10px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '6px', cursor: 'pointer', background: 'none', color: '#6a6a5a' },
-  btnD: { fontSize: '11px', padding: '4px 10px', border: '0.5px solid #f09595', borderRadius: '6px', cursor: 'pointer', background: 'none', color: '#a32d2d' },
-  btnH: { fontSize: '11px', padding: '4px 10px', border: '0.5px solid #FAC775', borderRadius: '6px', cursor: 'pointer', background: 'none', color: '#854F0B' },
-  overlay: { position: 'fixed' as const, inset: 0, background: 'rgba(0,0,0,0.45)', zIndex: 100, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '20px', overflowY: 'auto' as const },
-  modal: { background: '#fff', borderRadius: '16px', padding: '24px', width: '100%', maxWidth: '520px', border: '0.5px solid rgba(0,0,0,0.1)', margin: 'auto' },
-  modalTitle: { fontSize: '15px', fontWeight: 500, marginBottom: '4px', color: '#1a1a18' },
-  modalSub: { fontSize: '12px', color: '#6a6a5a', marginBottom: '16px' },
-  divider: { fontSize: '11px', fontWeight: 500, color: '#6a6a5a', textTransform: 'uppercase' as const, letterSpacing: '.06em', padding: '10px 0 6px', borderTop: '0.5px solid rgba(0,0,0,0.08)', marginTop: '4px' },
-  row2: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '12px' },
-  fg: { marginBottom: '12px' },
-  fgLabel: { fontSize: '12px', color: '#6a6a5a', display: 'block', marginBottom: '4px' },
-  fgInput: { width: '100%', padding: '8px 10px', fontSize: '13px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', boxSizing: 'border-box' as const },
-  fgTextarea: { width: '100%', padding: '8px 10px', fontSize: '13px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', minHeight: '56px', resize: 'vertical' as const, fontFamily: 'system-ui', boxSizing: 'border-box' as const },
-  langTabs: { display: 'flex', gap: '2px', padding: '3px', background: '#f0ede8', borderRadius: '10px', marginBottom: '14px', width: 'fit-content' },
-  langTab: { fontSize: '12px', padding: '5px 12px', borderRadius: '8px', border: 'none', cursor: 'pointer', background: 'none', color: '#6a6a5a', fontWeight: 500 },
-  langTabOn: { fontSize: '12px', padding: '5px 12px', borderRadius: '8px', border: 'none', cursor: 'pointer', background: '#fff', color: '#1a1a18', fontWeight: 500 },
-  modalActions: { display: 'flex', gap: '8px', justifyContent: 'flex-end', marginTop: '16px', paddingTop: '14px', borderTop: '0.5px solid rgba(0,0,0,0.08)' },
-  btnCancel: { fontSize: '13px', padding: '7px 16px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', cursor: 'pointer', background: 'none', color: '#6a6a5a' },
-  btnSave: { fontSize: '13px', fontWeight: 500, padding: '7px 18px', background: '#1a1a18', color: '#f5f3ee', border: 'none', borderRadius: '8px', cursor: 'pointer' },
-  toast: { position: 'fixed' as const, bottom: '16px', left: '50%', transform: 'translateX(-50%)', fontSize: '13px', padding: '10px 18px', background: '#d4edda', color: '#276339', border: '0.5px solid #a3d9b1', borderRadius: '8px', zIndex: 300, whiteSpace: 'nowrap' as const },
-}
-
-const emptyTranslations = () =>
+const emptyTr = () =>
   Object.fromEntries(LANGS.map(l => [l, { name: '', description: '', note: '' }]))
 
 export default function AdminDashboard({
@@ -79,12 +30,18 @@ export default function AdminDashboard({
   const [editItem, setEditItem] = useState<MenuItem | null>(null)
   const [activeLang, setActiveLang] = useState('it')
   const [toast, setToast] = useState('')
+  const [toastType, setToastType] = useState<'ok' | 'err'>('ok')
   const [deleteId, setDeleteId] = useState<string | null>(null)
-
-  // Dati del form
+  const [saving, setSaving] = useState(false)
   const [fCat, setFCat] = useState('antipasti')
   const [fPrice, setFPrice] = useState('')
-  const [fTr, setFTr] = useState<Record<string, { name: string; description: string; note: string }>>(emptyTranslations())
+  const [fTr, setFTr] = useState<Record<string, { name: string; description: string; note: string }>>(emptyTr())
+
+  // Blocca scroll body quando modal aperto
+  useEffect(() => {
+    document.body.style.overflow = modal || !!deleteId ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [modal, deleteId])
 
   const filtered = items.filter(i => {
     const matchCat = !catFilter || i.category === catFilter
@@ -95,11 +52,12 @@ export default function AdminDashboard({
   })
 
   const cats = [...new Set(items.map(i => i.category))]
-  const catLabel = (id: string) => initialCategories.find(c => c.id === id)?.translations?.it?.label || id
+  const catLabel = (id: string) =>
+    initialCategories.find(c => c.id === id)?.translations?.it?.label || id
 
-  function showToast(msg: string) {
-    setToast(msg)
-    setTimeout(() => setToast(''), 2500)
+  function showToast(msg: string, type: 'ok' | 'err' = 'ok') {
+    setToast(msg); setToastType(type)
+    setTimeout(() => setToast(''), 2800)
   }
 
   function openModal(item: MenuItem | null) {
@@ -108,7 +66,7 @@ export default function AdminDashboard({
     if (item) {
       setFCat(item.category)
       setFPrice(String(item.price))
-      const tr = emptyTranslations()
+      const tr = emptyTr()
       LANGS.forEach(l => {
         tr[l] = {
           name: item.translations[l]?.name || '',
@@ -118,9 +76,9 @@ export default function AdminDashboard({
       })
       setFTr(tr)
     } else {
-      setFCat('antipasti')
+      setFCat(initialCategories[0]?.id || 'antipasti')
       setFPrice('')
-      setFTr(emptyTranslations())
+      setFTr(emptyTr())
     }
     setModal(true)
   }
@@ -130,46 +88,35 @@ export default function AdminDashboard({
   }
 
   async function saveItem() {
-    if (!fTr.it.name.trim()) { alert('Inserisci almeno il nome in italiano'); return }
-    const data = {
-      category: fCat,
-      price: parseFloat(fPrice) || 0,
-      translations: fTr,
-      active: true,
-    }
+    if (!fTr.it.name.trim()) { showToast('Inserisci almeno il nome in italiano', 'err'); return }
+    setSaving(true)
+    const data = { category: fCat, price: parseFloat(fPrice) || 0, translations: fTr, active: true }
     if (editItem) {
       const { error } = await supabase.from('menu_items').update(data).eq('id', editItem.id)
-      if (!error) {
-        setItems(prev => prev.map(i => i.id === editItem.id ? { ...i, ...data } : i))
-        showToast('Piatto aggiornato')
-      }
+      if (error) showToast('Errore nel salvataggio', 'err')
+      else { setItems(prev => prev.map(i => i.id === editItem.id ? { ...i, ...data } : i)); showToast('Piatto aggiornato') }
     } else {
       const { data: newItem, error } = await supabase.from('menu_items').insert({ ...data, position: items.length }).select().single()
-      if (!error && newItem) {
-        setItems(prev => [...prev, newItem])
-        showToast('Nuovo piatto aggiunto')
-      }
+      if (error) showToast('Errore nel salvataggio', 'err')
+      else if (newItem) { setItems(prev => [...prev, newItem]); showToast('Nuovo piatto aggiunto') }
     }
+    setSaving(false)
     setModal(false)
   }
 
   async function deleteItem() {
     if (!deleteId) return
     const { error } = await supabase.from('menu_items').delete().eq('id', deleteId)
-    if (!error) {
-      setItems(prev => prev.filter(i => i.id !== deleteId))
-      showToast('Piatto eliminato')
-    }
+    if (error) showToast('Errore durante eliminazione', 'err')
+    else { setItems(prev => prev.filter(i => i.id !== deleteId)); showToast('Piatto eliminato') }
     setDeleteId(null)
   }
 
   async function toggleActive(item: MenuItem) {
     const newActive = !item.active
-    const { error } = await supabase
-      .from('menu_items')
-      .update({ active: newActive })
-      .eq('id', item.id)
-    if (!error) {
+    const { error } = await supabase.from('menu_items').update({ active: newActive }).eq('id', item.id)
+    if (error) showToast('Errore', 'err')
+    else {
       setItems(prev => prev.map(i => i.id === item.id ? { ...i, active: newActive } : i))
       showToast(newActive ? 'Piatto visibile sul menu' : 'Piatto nascosto dal menu')
     }
@@ -177,171 +124,224 @@ export default function AdminDashboard({
 
   async function logout() {
     await supabase.auth.signOut()
-    router.push('/admin')
+    router.push('/gestione-menu-ds95')
     router.refresh()
   }
 
   return (
-    <div style={s.wrap}>
+    <div style={{ minHeight: '100vh', background: '#f5f3ee', fontFamily: 'system-ui, sans-serif' }}>
+
       {/* Topbar */}
-      <div style={s.topbar}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <span style={s.logo}>Da Simonetta</span>
-          <span style={s.badge}>Gestione menu</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 16px', borderBottom: '0.5px solid rgba(0,0,0,0.1)', background: '#fff', position: 'sticky', top: 0, zIndex: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic', fontSize: '16px' }}>Da Simonetta</span>
+          <span style={{ fontSize: '10px', padding: '2px 8px', borderRadius: '20px', background: '#f0ede8', color: '#6a6a5a' }}>Admin</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <span style={{ fontSize: '12px', color: '#9a9a8a' }}>{userEmail}</span>
-          <button style={s.logoutBtn} onClick={logout}>Esci</button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ fontSize: '11px', color: '#9a9a8a', display: 'none' }} className="email-desktop">{userEmail}</span>
+          <button onClick={logout} style={{ fontSize: '12px', color: '#6a6a5a', border: '0.5px solid rgba(0,0,0,0.15)', padding: '6px 12px', borderRadius: '8px', cursor: 'pointer', background: 'none', minHeight: '36px' }}>
+            Esci
+          </button>
         </div>
       </div>
 
-      <div style={s.content}>
+      <div style={{ padding: '16px' }}>
+
         {/* Stats */}
-        <div style={s.stats}>
-          <div style={s.stat}><div style={s.statN}>{items.length}</div><div style={s.statL}>Piatti totali</div></div>
-          <div style={s.stat}><div style={s.statN}>{cats.length}</div><div style={s.statL}>Categorie</div></div>
-          <div style={s.stat}><div style={s.statN}>{filtered.length}</div><div style={s.statL}>Visualizzati</div></div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '8px', marginBottom: '16px' }}>
+          {[
+            { n: items.length, l: 'Totali' },
+            { n: cats.length, l: 'Categorie' },
+            { n: filtered.length, l: 'Filtrati' },
+          ].map(({ n, l }) => (
+            <div key={l} style={{ background: '#fff', border: '0.5px solid rgba(0,0,0,0.08)', borderRadius: '10px', padding: '10px 12px' }}>
+              <div style={{ fontSize: '20px', fontWeight: 500 }}>{n}</div>
+              <div style={{ fontSize: '11px', color: '#6a6a5a' }}>{l}</div>
+            </div>
+          ))}
         </div>
 
         {/* Toolbar */}
-        <div style={s.toolbar}>
-          <div style={s.toolbarLeft}>
-            <select style={s.select} value={catFilter} onChange={e => setCatFilter(e.target.value)}>
-              <option value="">Tutte le categorie</option>
-              {cats.map(c => <option key={c} value={c}>{catLabel(c)}</option>)}
-            </select>
-            <input style={s.searchInput} type="text" placeholder="Cerca piatto..." value={searchQ} onChange={e => setSearchQ(e.target.value)} />
-          </div>
-          <button style={s.addBtn} onClick={() => openModal(null)}>+ Nuovo piatto</button>
+        <div style={{ display: 'flex', gap: '8px', marginBottom: '12px', flexWrap: 'wrap' }}>
+          <select value={catFilter} onChange={e => setCatFilter(e.target.value)}
+            style={{ fontSize: '13px', padding: '8px 10px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', flex: 1, minWidth: '120px', minHeight: '40px' }}>
+            <option value="">Tutte le categorie</option>
+            {cats.map(c => <option key={c} value={c}>{catLabel(c)}</option>)}
+          </select>
+          <input type="text" placeholder="Cerca..." value={searchQ} onChange={e => setSearchQ(e.target.value)}
+            style={{ fontSize: '13px', padding: '8px 10px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', flex: 1, minWidth: '100px', minHeight: '40px' }} />
+          <button onClick={() => openModal(null)}
+            style={{ fontSize: '13px', fontWeight: 500, padding: '8px 16px', background: '#1a1a18', color: '#f5f3ee', border: 'none', borderRadius: '8px', cursor: 'pointer', minHeight: '40px', whiteSpace: 'nowrap' }}>
+            + Nuovo
+          </button>
         </div>
 
-        {/* Tabella */}
-        <div style={{ overflowX: 'auto' }}>
-          <table style={s.table}>
-            <thead>
-              <tr>
-                <th style={s.th}>Nome</th>
-                <th style={s.th}>Categoria</th>
-                <th style={s.th}>Prezzo</th>
-                <th style={s.th}>Lingue</th>
-                <th style={{ ...s.th, width: '130px' }}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map(item => (
-                <tr key={item.id} onMouseEnter={e => (e.currentTarget.style.background = '#faf9f6')} onMouseLeave={e => (e.currentTarget.style.background = '')}>
-                  <td style={s.td}>
-                    <div style={s.nameIt}>
+        {/* Lista piatti — card su mobile invece di tabella */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {filtered.map(item => (
+            <div key={item.id} style={{
+              background: item.active ? '#fff' : '#faf8f4',
+              border: `0.5px solid ${item.active ? 'rgba(0,0,0,0.08)' : 'rgba(0,0,0,0.05)'}`,
+              borderRadius: '10px', padding: '12px 14px',
+              opacity: item.active ? 1 : 0.7,
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                    <span style={{ fontWeight: 500, fontSize: '14px' }}>
                       {item.translations.it?.name || '—'}
-                      {!item.active && (
-                        <span style={{ fontSize: '10px', marginLeft: '6px', padding: '1px 6px', borderRadius: '20px', background: '#faeeda', color: '#854F0B' }}>
-                          nascosto
-                        </span>
-                      )}
-                    </div>
-                    <div style={s.nameEn}>{item.translations.en?.name || ''}</div>
-                  </td>
-                  <td style={s.td}><span style={s.catPill}>{catLabel(item.category)}</span></td>
-                  <td style={{ ...s.td, ...s.price }}>€ {Number(item.price).toFixed(2)}</td>
-                  <td style={s.td}>
-                    <div style={s.langDots}>
-                      {LANGS.map(l => {
-                        const has = !!item.translations[l]?.name?.trim()
-                        return <div key={l} style={has ? s.dot : s.dotMissing} title={has ? 'Tradotto' : 'Mancante'}>{l.toUpperCase()}</div>
-                      })}
-                    </div>
-                  </td>
-                  <td style={s.td}>
-                    <div style={s.acts}>
-                      <button style={s.btnE} onClick={() => openModal(item)}>Modifica</button>
-                      <button style={s.btnH} onClick={() => toggleActive(item)}>
-                        {item.active ? 'Nascondi' : 'Mostra'}
-                      </button>
-                      <button style={s.btnD} onClick={() => setDeleteId(item.id)}>Elimina</button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    </span>
+                    {!item.active && (
+                      <span style={{ fontSize: '10px', padding: '1px 6px', borderRadius: '20px', background: '#faeeda', color: '#854F0B' }}>
+                        nascosto
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ fontSize: '12px', color: '#6a6a5a', marginTop: '2px' }}>
+                    {catLabel(item.category)} · € {Number(item.price).toFixed(2)}
+                  </div>
+                </div>
+                {/* Indicatori lingue */}
+                <div style={{ display: 'flex', gap: '2px', marginLeft: '8px', flexShrink: 0 }}>
+                  {LANGS.map(l => {
+                    const has = !!item.translations[l]?.name?.trim()
+                    return (
+                      <div key={l} title={l.toUpperCase()} style={{
+                        width: '18px', height: '18px', borderRadius: '50%', fontSize: '7px', fontWeight: 700,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        background: has ? '#d4edda' : '#f0ede8',
+                        color: has ? '#276339' : '#9a9a8a',
+                      }}>
+                        {l.toUpperCase()}
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Azioni — bottoni grandi touch-friendly */}
+              <div style={{ display: 'flex', gap: '6px', marginTop: '8px' }}>
+                <button onClick={() => openModal(item)} style={{ flex: 1, fontSize: '12px', padding: '8px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', cursor: 'pointer', background: 'none', color: '#1a1a18', minHeight: '36px' }}>
+                  ✏️ Modifica
+                </button>
+                <button onClick={() => toggleActive(item)} style={{ flex: 1, fontSize: '12px', padding: '8px', border: `0.5px solid ${item.active ? '#FAC775' : '#97C459'}`, borderRadius: '8px', cursor: 'pointer', background: 'none', color: item.active ? '#854F0B' : '#3B6D11', minHeight: '36px' }}>
+                  {item.active ? '🙈 Nascondi' : '👁 Mostra'}
+                </button>
+                <button onClick={() => setDeleteId(item.id)} style={{ fontSize: '12px', padding: '8px 12px', border: '0.5px solid #f09595', borderRadius: '8px', cursor: 'pointer', background: 'none', color: '#a32d2d', minHeight: '36px' }}>
+                  🗑
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
       {/* Modal modifica/aggiunta */}
       {modal && (
-        <div style={s.overlay} onClick={e => e.target === e.currentTarget && setModal(false)}>
-          <div style={s.modal}>
-            <div style={s.modalTitle}>{editItem ? 'Modifica piatto' : 'Nuovo piatto'}</div>
-            <div style={s.modalSub}>{editItem ? 'Modifica nome, prezzo o traduzioni' : 'Compila almeno italiano e inglese'}</div>
+        <div onClick={e => e.target === e.currentTarget && setModal(false)}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 100, overflowY: 'auto', padding: '16px', display: 'flex', alignItems: 'flex-start', justifyContent: 'center' }}>
+          <div style={{ background: '#fff', borderRadius: '16px', padding: '20px', width: '100%', maxWidth: '500px', margin: 'auto' }}>
+            <div style={{ fontSize: '16px', fontWeight: 500, marginBottom: '4px' }}>{editItem ? 'Modifica piatto' : 'Nuovo piatto'}</div>
+            <div style={{ fontSize: '12px', color: '#6a6a5a', marginBottom: '16px' }}>{editItem ? 'Modifica dati o traduzioni' : 'Compila almeno italiano e inglese'}</div>
 
-            <div style={s.divider}>Dati generali</div>
-            <div style={{ ...s.row2, marginTop: '10px' }}>
-              <div style={{ ...s.fg, marginBottom: 0 }}>
-                <label style={s.fgLabel}>Categoria</label>
-                <select style={{ ...s.fgInput }} value={fCat} onChange={e => setFCat(e.target.value)}>
+            {/* Categoria + Prezzo */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '14px' }}>
+              <div>
+                <label style={{ fontSize: '12px', color: '#6a6a5a', display: 'block', marginBottom: '4px' }}>Categoria</label>
+                <select value={fCat} onChange={e => setFCat(e.target.value)}
+                  style={{ width: '100%', padding: '9px 10px', fontSize: '13px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', minHeight: '40px' }}>
                   {initialCategories.map(c => (
                     <option key={c.id} value={c.id}>{c.translations.it?.label || c.id}</option>
                   ))}
                 </select>
               </div>
-              <div style={{ ...s.fg, marginBottom: 0 }}>
-                <label style={s.fgLabel}>Prezzo (€)</label>
-                <input style={s.fgInput} type="number" step="0.50" min="0" placeholder="10.00" value={fPrice} onChange={e => setFPrice(e.target.value)} />
+              <div>
+                <label style={{ fontSize: '12px', color: '#6a6a5a', display: 'block', marginBottom: '4px' }}>Prezzo (€)</label>
+                <input type="number" step="0.50" min="0" placeholder="10.00" value={fPrice} onChange={e => setFPrice(e.target.value)}
+                  style={{ width: '100%', padding: '9px 10px', fontSize: '13px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', boxSizing: 'border-box', minHeight: '40px' }} />
               </div>
             </div>
 
-            <div style={{ ...s.divider, marginTop: '16px' }}>Traduzioni</div>
-
             {/* Tab lingue */}
-            <div style={{ ...s.langTabs, marginTop: '10px' }}>
+            <div style={{ fontSize: '11px', color: '#6a6a5a', textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: '10px' }}>Traduzioni</div>
+            <div style={{ display: 'flex', gap: '4px', marginBottom: '14px', overflowX: 'auto', paddingBottom: '2px' }}>
               {LANGS.map(l => (
-                <button key={l} style={activeLang === l ? s.langTabOn : s.langTab} onClick={() => setActiveLang(l)}>
-                  {LANG_FLAGS[l]}
+                <button key={l} onClick={() => setActiveLang(l)}
+                  style={{ fontSize: '12px', padding: '6px 12px', borderRadius: '8px', border: 'none', cursor: 'pointer', whiteSpace: 'nowrap', minHeight: '36px', fontWeight: 500,
+                    background: activeLang === l ? '#1a1a18' : '#f0ede8',
+                    color: activeLang === l ? '#f5f3ee' : '#6a6a5a',
+                  }}>
+                  {LANG_LABELS[l]}
                 </button>
               ))}
             </div>
 
-            {/* Pannello lingua attiva */}
-            <div style={s.fg}>
-              <label style={s.fgLabel}>Nome in {activeLang.toUpperCase()}</label>
-              <input style={s.fgInput} type="text" placeholder="Nome del piatto" value={fTr[activeLang]?.name || ''} onChange={e => updateTr(activeLang, 'name', e.target.value)} />
+            {/* Campi traduzione */}
+            <div style={{ marginBottom: '10px' }}>
+              <label style={{ fontSize: '12px', color: '#6a6a5a', display: 'block', marginBottom: '4px' }}>Nome</label>
+              <input type="text" placeholder="Nome del piatto" value={fTr[activeLang]?.name || ''} onChange={e => updateTr(activeLang, 'name', e.target.value)}
+                style={{ width: '100%', padding: '9px 10px', fontSize: '13px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', boxSizing: 'border-box', minHeight: '40px' }} />
             </div>
-            <div style={s.fg}>
-              <label style={s.fgLabel}>Descrizione</label>
-              <textarea style={s.fgTextarea} placeholder="Ingredienti o breve descrizione..." value={fTr[activeLang]?.description || ''} onChange={e => updateTr(activeLang, 'description', e.target.value)} />
+            <div style={{ marginBottom: '10px' }}>
+              <label style={{ fontSize: '12px', color: '#6a6a5a', display: 'block', marginBottom: '4px' }}>Descrizione</label>
+              <textarea placeholder="Ingredienti o breve descrizione..." value={fTr[activeLang]?.description || ''} onChange={e => updateTr(activeLang, 'description', e.target.value)}
+                style={{ width: '100%', padding: '9px 10px', fontSize: '13px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', minHeight: '72px', resize: 'vertical', fontFamily: 'system-ui', boxSizing: 'border-box' }} />
             </div>
-            <div style={{ ...s.fg, marginBottom: 0 }}>
-              <label style={s.fgLabel}>Nota (opzionale)</label>
-              <input style={s.fgInput} type="text" placeholder="es. Solo su prenotazione" value={fTr[activeLang]?.note || ''} onChange={e => updateTr(activeLang, 'note', e.target.value)} />
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ fontSize: '12px', color: '#6a6a5a', display: 'block', marginBottom: '4px' }}>Nota (opzionale)</label>
+              <input type="text" placeholder="es. Solo su prenotazione" value={fTr[activeLang]?.note || ''} onChange={e => updateTr(activeLang, 'note', e.target.value)}
+                style={{ width: '100%', padding: '9px 10px', fontSize: '13px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', background: '#fff', boxSizing: 'border-box', minHeight: '40px' }} />
             </div>
 
-            <div style={s.modalActions}>
-              <button style={s.btnCancel} onClick={() => setModal(false)}>Annulla</button>
-              <button style={s.btnSave} onClick={saveItem}>Salva piatto</button>
+            <div style={{ display: 'flex', gap: '8px', paddingTop: '14px', borderTop: '0.5px solid rgba(0,0,0,0.08)' }}>
+              <button onClick={() => setModal(false)}
+                style={{ flex: 1, fontSize: '13px', padding: '10px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', cursor: 'pointer', background: 'none', minHeight: '44px' }}>
+                Annulla
+              </button>
+              <button onClick={saveItem} disabled={saving}
+                style={{ flex: 2, fontSize: '13px', fontWeight: 500, padding: '10px', background: '#1a1a18', color: '#f5f3ee', border: 'none', borderRadius: '8px', cursor: saving ? 'not-allowed' : 'pointer', opacity: saving ? 0.7 : 1, minHeight: '44px' }}>
+                {saving ? 'Salvataggio...' : 'Salva piatto'}
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Confirm delete */}
+      {/* Confirm elimina */}
       {deleteId && (
-        <div style={s.overlay}>
-          <div style={{ ...s.modal, maxWidth: '340px', textAlign: 'center' }}>
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}>
+          <div style={{ background: '#fff', borderRadius: '16px', padding: '24px', maxWidth: '320px', width: '100%', textAlign: 'center' }}>
             <div style={{ fontSize: '15px', fontWeight: 500, marginBottom: '8px' }}>Elimina piatto</div>
             <div style={{ fontSize: '13px', color: '#6a6a5a', marginBottom: '20px', lineHeight: 1.5 }}>
-              Sei sicura di voler eliminare &ldquo;{items.find(i => i.id === deleteId)?.translations.it?.name}&rdquo;?<br />
-              L&apos;operazione non è reversibile.
+              Sei sicura di voler eliminare <strong>{items.find(i => i.id === deleteId)?.translations.it?.name}</strong>?<br />
+              L&apos;operazione non è reversibile. Puoi anche solo nasconderlo.
             </div>
-            <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
-              <button style={s.btnCancel} onClick={() => setDeleteId(null)}>Annulla</button>
-              <button style={{ ...s.btnSave, background: '#a32d2d' }} onClick={deleteItem}>Sì, elimina</button>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => setDeleteId(null)}
+                style={{ flex: 1, fontSize: '13px', padding: '10px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '8px', cursor: 'pointer', background: 'none', minHeight: '44px' }}>
+                Annulla
+              </button>
+              <button onClick={deleteItem}
+                style={{ flex: 1, fontSize: '13px', fontWeight: 500, padding: '10px', background: '#a32d2d', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', minHeight: '44px' }}>
+                Elimina
+              </button>
             </div>
           </div>
         </div>
       )}
 
       {/* Toast */}
-      {toast && <div style={s.toast}>{toast}</div>}
+      {toast && (
+        <div style={{
+          position: 'fixed', bottom: '24px', left: '50%', transform: 'translateX(-50%)',
+          fontSize: '13px', padding: '10px 18px', borderRadius: '8px', zIndex: 300, whiteSpace: 'nowrap',
+          background: toastType === 'ok' ? '#d4edda' : '#fcebeb',
+          color: toastType === 'ok' ? '#276339' : '#a32d2d',
+          border: `0.5px solid ${toastType === 'ok' ? '#a3d9b1' : '#f09595'}`,
+        }}>
+          {toast}
+        </div>
+      )}
     </div>
   )
 }
