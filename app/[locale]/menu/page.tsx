@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
+import { createClient } from '@/lib/supabase/server'
 import MenuClient from '@/components/MenuClient'
-import menuData from '@/data/menu.json'
+import type { MenuItem, MenuCategory, Locale } from '@/lib/types'
 
 export const metadata: Metadata = {
   title: 'Menu',
@@ -9,13 +10,40 @@ export const metadata: Metadata = {
     'primi e secondi romani, dolci e bevande. Via Pontremoli 30, Roma.',
 }
 
-type Locale = 'it' | 'en'
-
 export default async function MenuPage({
   params,
 }: {
-  params: Promise<{ locale: Locale }>
+  params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  return <MenuClient menuData={menuData as any} locale={locale} />
+  const supabase = await createClient()
+
+  const [{ data: rawItems }, { data: rawCategories }] = await Promise.all([
+    supabase.from('menu_items').select('*').eq('active', true).order('position'),
+    supabase.from('menu_categories').select('*').order('position'),
+  ])
+
+  const items: MenuItem[] = (rawItems || []).map((i: any) => ({
+    id: i.id,
+    category: i.category,
+    price: Number(i.price),
+    translations: i.translations,
+    position: i.position,
+    active: i.active,
+    created_at: i.created_at,
+  }))
+
+  const categories: MenuCategory[] = (rawCategories || []).map((c: any) => ({
+    id: c.id,
+    translations: c.translations,
+    position: c.position,
+  }))
+
+  return (
+    <MenuClient
+      categories={categories}
+      items={items}
+      locale={(locale as Locale) ?? 'it'}
+    />
+  )
 }

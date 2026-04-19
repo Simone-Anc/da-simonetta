@@ -7,9 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "generate-qr": "tsx scripts/generate-qr.ts"
+    "generate-qr": "tsx scripts/generate-qr.ts",
+    "migrate": "tsx --env-file=.env.local scripts/migrate-to-supabase.ts"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.103.3",
     "next": "16.2.4",
     "next-intl": "^4.9.1",
     "qrcode": "^1.5.4",

@@ -181,7 +181,7 @@
         { "id": "acqua-1lt",        "name": { "it": "Acqua 1 Lt",                "en": "Water 1 Lt" },                  "price": 2.00 },
         { "id": "acqua-05lt",       "name": { "it": "Acqua ½ Lt",               "en": "Water ½ Lt" },                  "price": 1.50 },
         { "id": "coca-1lt",         "name": { "it": "Coca Cola 1 Lt",            "en": "Coca Cola 1 Lt" },              "price": 4.00 },
-        { "id": "bibita-lattina",   "name": { "it": "Coca/Fanta/Sprite (lattina)","en": "Coke/Fanta/Sprite can" },      "price": 2.00 },
+        { "id": "bibita-lattina",   "name": { "it": "Coca/Fanta/Sprite in lattina","en": "Coke/Fanta/Sprite in a can" },      "price": 2.00 },
         { "id": "spritz",           "name": { "it": "Spritz",                    "en": "Spritz" },                      "price": 5.00 },
         { "id": "birra-spina-02",   "name": { "it": "Birra alla spina 0,20 Lt",  "en": "Draft Beer 0.20 Lt" },         "price": 3.00 },
         { "id": "birra-spina-04",   "name": { "it": "Birra alla spina 0,40 Lt",  "en": "Draft Beer 0.40 Lt" },         "price": 4.00 },

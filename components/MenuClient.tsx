@@ -3,39 +3,15 @@
 import { useState, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter, usePathname } from 'next/navigation'
-
-type Locale = 'it' | 'en'
-
-interface MenuItem {
-  id: string
-  name: Record<Locale, string>
-  price: number
-  description?: Record<Locale, string>
-  note?: Record<Locale, string>
-  vegetarian?: boolean
-}
-
-interface SubCategory {
-  label: Record<Locale, string>
-  items: MenuItem[]
-}
-
-interface Category {
-  id: string
-  label: Record<Locale, string>
-  items?: MenuItem[]
-  subcategories?: SubCategory[]
-}
-
-interface MenuData {
-  categories: Category[]
-}
+import type { MenuItem, MenuCategory, Locale } from '@/lib/types'
 
 export default function MenuClient({
-  menuData,
+  categories,
+  items,
   locale,
 }: {
-  menuData: MenuData
+  categories: MenuCategory[]
+  items: MenuItem[]
   locale: Locale
 }) {
   const t = useTranslations('menu')
@@ -47,11 +23,14 @@ export default function MenuClient({
   const otherLocale: Locale = locale === 'it' ? 'en' : 'it'
   const switchPath = pathname.replace(`/${locale}`, `/${otherLocale}`)
 
-  const categories = menuData.categories
-  const visibleCategories =
+  const visibleItems =
     activeCategory === 'all'
-      ? categories
-      : categories.filter(c => c.id === activeCategory)
+      ? items
+      : items.filter(i => i.category === activeCategory)
+
+  const visibleCategories = categories.filter(cat =>
+    visibleItems.some(i => i.category === cat.id)
+  )
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
@@ -65,33 +44,23 @@ export default function MenuClient({
             {t('title')}
           </h1>
         </div>
-
-        {/* Switcher IT / EN */}
         <div className="flex items-center gap-1 p-1 bg-[#e8e6e0] rounded-xl shrink-0 mt-1">
           <button
             onClick={() => locale !== 'it' && router.push(switchPath)}
             className={`text-xs px-3 py-1.5 rounded-lg transition-all ${
-              locale === 'it'
-                ? 'bg-[#f5f3ee] text-[#1a1a18] font-medium'
-                : 'text-[#6a6a5a] hover:text-[#1a1a18]'
+              locale === 'it' ? 'bg-[#f5f3ee] text-[#1a1a18] font-medium' : 'text-[#6a6a5a] hover:text-[#1a1a18]'
             }`}
-          >
-            IT
-          </button>
+          >IT</button>
           <button
             onClick={() => locale !== 'en' && router.push(switchPath)}
             className={`text-xs px-3 py-1.5 rounded-lg transition-all ${
-              locale === 'en'
-                ? 'bg-[#f5f3ee] text-[#1a1a18] font-medium'
-                : 'text-[#6a6a5a] hover:text-[#1a1a18]'
+              locale === 'en' ? 'bg-[#f5f3ee] text-[#1a1a18] font-medium' : 'text-[#6a6a5a] hover:text-[#1a1a18]'
             }`}
-          >
-            EN
-          </button>
+          >EN</button>
         </div>
       </div>
 
-      {/* Segmented control scrollabile su mobile */}
+      {/* Filtri categoria — scrollabili su mobile */}
       <div
         ref={scrollRef}
         className="overflow-x-auto pb-1 mb-8 -mx-4 px-4 sm:mx-0 sm:px-0"
@@ -106,7 +75,7 @@ export default function MenuClient({
           {categories.map(cat => (
             <SegTab
               key={cat.id}
-              label={cat.label[locale]}
+              label={cat.translations[locale]?.label ?? cat.id}
               active={activeCategory === cat.id}
               onClick={() => setActiveCategory(cat.id)}
             />
@@ -117,41 +86,40 @@ export default function MenuClient({
       {/* Sezioni menu */}
       <div className="space-y-10 sm:space-y-12">
         {visibleCategories.map(cat => {
-          if (cat.subcategories) {
-            return (
-              <section key={cat.id}>
-                <h2 className="text-2xl font-medium mb-5 pb-2 border-b border-black/10"
-                    style={{ fontFamily: "'Fraunces', serif" }}>
-                  {cat.label[locale]}
-                </h2>
-                {cat.subcategories.map((sub, i) => (
-                  <div key={i} className="mb-8">
-                    <h3 className="text-xs uppercase tracking-widest text-[#6a6a5a] mb-4">
-                      {sub.label[locale]}
-                    </h3>
-                    <ItemList items={sub.items} locale={locale} t={t} />
-                  </div>
-                ))}
-              </section>
-            )
-          }
-
-          const items = cat.items ?? []
-          if (items.length === 0) return null
-
+          const catItems = visibleItems.filter(i => i.category === cat.id)
+          if (catItems.length === 0) return null
           return (
             <section key={cat.id}>
               <h2 className="text-2xl font-medium mb-5 pb-2 border-b border-black/10"
                   style={{ fontFamily: "'Fraunces', serif" }}>
-                {cat.label[locale]}
+                {cat.translations[locale]?.label ?? cat.id}
               </h2>
-              <ItemList items={items} locale={locale} t={t} />
+              <div className="divide-y divide-black/5">
+                {catItems.map(item => {
+                  const tr = item.translations[locale] ?? item.translations['it']
+                  return (
+                    <div key={item.id} className="flex justify-between items-start py-3 gap-3">
+                      <div className="flex-1 min-w-0">
+                        <span className="text-sm font-medium">{tr?.name}</span>
+                        {tr?.description && (
+                          <p className="text-xs text-[#6a6a5a] mt-0.5 leading-snug">{tr.description}</p>
+                        )}
+                        {tr?.note && (
+                          <p className="text-[11px] text-[#9a9a8a] mt-0.5 italic">{tr.note}</p>
+                        )}
+                      </div>
+                      <span className="text-sm font-medium whitespace-nowrap shrink-0">
+                        € {Number(item.price).toFixed(2)}
+                      </span>
+                    </div>
+                  )
+                })}
+              </div>
             </section>
           )
         })}
       </div>
 
-      {/* Nota surgelati */}
       <p className="mt-12 sm:mt-16 text-xs text-[#6a6a5a] italic border-t border-black/10 pt-4">
         {t('note')}
       </p>
@@ -159,62 +127,15 @@ export default function MenuClient({
   )
 }
 
-function SegTab({
-  label,
-  active,
-  onClick,
-}: {
-  label: string
-  active: boolean
-  onClick: () => void
-}) {
+function SegTab({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
     <button
       onClick={onClick}
       className={`text-sm px-4 py-2 rounded-lg transition-all whitespace-nowrap ${
-        active
-          ? 'bg-[#f5f3ee] text-[#1a1a18] font-medium'
-          : 'text-[#6a6a5a] hover:text-[#1a1a18]'
+        active ? 'bg-[#f5f3ee] text-[#1a1a18] font-medium' : 'text-[#6a6a5a] hover:text-[#1a1a18]'
       }`}
     >
       {label}
     </button>
-  )
-}
-
-function ItemList({
-  items,
-  locale,
-  t,
-}: {
-  items: MenuItem[]
-  locale: Locale
-  t: ReturnType<typeof useTranslations>
-}) {
-  if (items.length === 0) return null
-
-  return (
-    <div className="divide-y divide-black/5">
-      {items.map(item => (
-        <div key={item.id} className="flex justify-between items-start py-3 gap-3">
-          <div className="flex-1 min-w-0">
-            <span className="text-sm font-medium">{item.name[locale]}</span>
-            {item.description && (
-              <p className="text-xs text-[#6a6a5a] mt-0.5 leading-snug">
-                {item.description[locale]}
-              </p>
-            )}
-            {item.note && (
-              <p className="text-[11px] text-[#9a9a8a] mt-0.5 italic">
-                {item.note[locale]}
-              </p>
-            )}
-          </div>
-          <span className="text-sm font-medium whitespace-nowrap shrink-0">
-            € {item.price.toFixed(2)}
-          </span>
-        </div>
-      ))}
-    </div>
   )
 }
