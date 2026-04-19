@@ -65,26 +65,24 @@ export default async function HomePage({
           </Link>
           <style>{`.cta-hero:hover { gap: 16px !important; opacity: 0.9; }`}</style>
         </div>
+      </section>
 
-        {/* Info in basso dentro la hero */}
-        <div style={{ position: 'absolute', bottom: '20px', left: '24px', right: '24px', zIndex: 10, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-          <div>
-            <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 2px' }}>
-              {locale === 'it' ? 'Orari' : 'Hours'}
-            </p>
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.7)', margin: 0 }}>
-              {locale === 'it' ? 'Tutti i giorni 12–15 · 19–23' : 'Every day 12–15 · 19–23'}
-            </p>
-          </div>
-          <Link href={`/${locale}/dove-siamo`} style={{ textAlign: 'right', textDecoration: 'none' }}>
-            <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: '0 0 2px' }}>
-              {locale === 'it' ? 'Dove siamo' : 'Location'}
-            </p>
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.7)', margin: 0 }}>
-              Via Pontremoli 30 ↗
-            </p>
-          </Link>
+      {/* ── Strip info su sfondo grigio ── */}
+      <section style={{ background: '#e8e6e0', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+        <div style={{ padding: '14px 20px', borderRight: '0.5px solid rgba(0,0,0,0.08)' }}>
+          <p style={{ fontSize: '10px', color: '#9a9a8a', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '3px' }}>
+            {locale === 'it' ? 'Orari' : 'Hours'}
+          </p>
+          <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a1a18', margin: 0 }}>
+            {locale === 'it' ? 'Tutti i giorni 12–15 · 19–23' : 'Every day 12–15 · 19–23'}
+          </p>
         </div>
+        <Link href={`/${locale}/dove-siamo`} style={{ padding: '14px 20px', textDecoration: 'none', display: 'block' }}>
+          <p style={{ fontSize: '10px', color: '#9a9a8a', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '3px' }}>
+            {locale === 'it' ? 'Dove siamo' : 'Location'}
+          </p>
+          <p style={{ fontSize: '13px', fontWeight: 500, color: '#1a1a18', margin: 0 }}>Via Pontremoli 30 ↗</p>
+        </Link>
       </section>
 
       {/* ── 3 Punti di forza — animazione slide-in ── */}
@@ -102,6 +100,22 @@ export default async function HomePage({
         cta={t('cta')}
         locale={locale}
       />
+
+      {/* ── Prenota ── */}
+      <section style={{ background: '#f5f3ee', borderTop: '0.5px solid rgba(0,0,0,0.06)', padding: '56px 24px', textAlign: 'center' }}>
+        <p style={{ fontSize: '11px', color: '#9a9a8a', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '12px' }}>
+          {locale === 'it' ? 'Prenota' : 'Reservations'}
+        </p>
+        <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)', color: '#1a1a18', marginBottom: '10px', lineHeight: 1.25 }}>
+          {locale === 'it' ? 'Riserva il tuo tavolo' : 'Reserve your table'}
+        </h2>
+        <p style={{ fontSize: '14px', color: '#6a6a5a', marginBottom: '28px' }}>
+          {locale === 'it' ? 'Contattaci al numero' : 'Call us at'}
+        </p>
+        <a href="tel:+390670491589" style={{ display: 'inline-block', fontFamily: "'Fraunces', serif", fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 400, color: '#1a1a18', textDecoration: 'none', letterSpacing: '.01em', borderBottom: '1.5px solid rgba(0,0,0,0.15)', paddingBottom: '4px' }}>
+          06 7049 1589
+        </a>
+      </section>
     </>
   )
 }
