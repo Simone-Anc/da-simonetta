@@ -38,7 +38,7 @@ export default async function HomePage({
       {/* ── Hero con foto ── */}
       <section style={{ position: 'relative', minHeight: '520px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
         <img
-          src="/hero1.jpg"
+          src="/hero2.jpg"
           alt="Trattoria Da Simonetta"
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
         />
