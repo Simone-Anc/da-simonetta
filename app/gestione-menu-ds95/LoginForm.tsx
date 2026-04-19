@@ -23,7 +23,7 @@ export default function LoginForm() {
       setError('Email o password non corretti')
       setLoading(false)
     } else {
-      router.push('/admin/dashboard')
+      router.push('/gestione-menu-ds95')
       router.refresh()
     }
   }
