@@ -6,7 +6,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import type { MenuItem, MenuCategory, Locale } from '@/lib/types'
 
 // Lingue disponibili — aggiungi qui quando ne aggiungi una nuova
-const LOCALES: Locale[] = ['it', 'en', 'fr', 'es', 'de']
+const LOCALES: Locale[] = ['it', 'en']
 
 export default function MenuClient({
   categories,

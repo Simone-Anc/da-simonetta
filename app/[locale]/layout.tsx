@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://www.dasimonetta.it' },
 }
 
-const locales = ['it', 'en', 'fr', 'es', 'de']
+const locales = ['it', 'en']
 
 export default async function LocaleLayout({
   children,

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 // Rivalida la cache ogni 5 minuti
 // 100 visitatori in 5 minuti = 1 sola query a Supabase invece di 100
-export const revalidate = 300
+export const revalidate = 3600
 
 export default async function MenuPage({
   params,

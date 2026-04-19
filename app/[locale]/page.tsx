@@ -1,6 +1,5 @@
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
-import menuData from '@/data/menu.json'
 
 type Locale = 'it' | 'en'
 
@@ -12,39 +11,56 @@ export default async function HomePage({
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'home' })
 
-  const featured = [
-    menuData.categories.find(c => c.id === 'pizza')?.items?.find(i => i.id === 'margherita'),
-    menuData.categories.find(c => c.id === 'primi')?.items?.find(i => i.id === 'carbonara'),
-    menuData.categories.find(c => c.id === 'primi')?.items?.find(i => i.id === 'cacio-pepe'),
-    menuData.categories.find(c => c.id === 'secondi')?.items?.find(i => i.id === 'coda-vaccinara'),
-  ].filter((x): x is NonNullable<typeof x> => x != null)
+  const punti = locale === 'it' ? [
+    { icon: '🍝', title: 'Cucina tradizionale romana', desc: 'Ricette della nonna, tramandate di generazione in generazione. Sapori autentici che raccontano Roma.' },
+    { icon: '🫳', title: 'Pasta fatta a mano', desc: 'Ogni giorno impastiamo a mano. Tonnarelli, rigatoni e gnocchi preparati con farina e uova fresche.' },
+    { icon: '🍕', title: 'Pizza cotta in forno a legna', desc: 'Il nostro forno a legna brucia dal 1995. Impasto a lunga lievitazione, cornicione croccante.' },
+  ] : [
+    { icon: '🍝', title: 'Traditional Roman cuisine', desc: 'Grandma\'s recipes, passed down through generations. Authentic flavours that tell the story of Rome.' },
+    { icon: '🫳', title: 'Handmade pasta', desc: 'We knead by hand every day. Tonnarelli, rigatoni and gnocchi made with fresh flour and eggs.' },
+    { icon: '🍕', title: 'Wood-fired pizza', desc: 'Our wood-fired oven has been burning since 1995. Long-leavened dough, crispy crust.' },
+  ]
+
+  const chiSiamo = locale === 'it' ? {
+    eyebrow: 'La nostra storia',
+    title: 'Una trattoria di famiglia, nel cuore di Roma',
+    body: 'Da Simonetta è una trattoria a gestione familiare aperta nel 1995 in Via Pontremoli, nel quartiere Appio Latino. Quello che trovi qui è cucina romana vera — abbacchio, coda alla vaccinara, cacio e pepe — preparata ogni giorno con ingredienti freschi e ricette di famiglia. Niente fronzoli, niente menu turistici: solo la cucina che i romani mangiano a casa propria. Al tavolo ci trovi sempre qualcuno della famiglia, pronto ad accoglierti come un ospite.',
+  } : {
+    eyebrow: 'Our story',
+    title: 'A family trattoria in the heart of Rome',
+    body: 'Da Simonetta is a family-run trattoria opened in 1995 on Via Pontremoli, in the Appio Latino neighbourhood. What you\'ll find here is real Roman cooking — abbacchio, coda alla vaccinara, cacio e pepe — prepared every day with fresh ingredients and family recipes. No frills, no tourist menus: just the food Romans eat at home. There\'s always a family member at the table, ready to welcome you like a guest.',
+  }
 
   return (
     <>
-      {/* ── Hero ── */}
-      <section className="bg-[#1a1a18] min-h-[480px] sm:min-h-[520px] flex flex-col items-center justify-center text-center px-6 gap-4">
-        <p className="text-xs tracking-widest text-white/50 uppercase">
-          {t('eyebrow')}
-        </p>
-        <h1
-          className="text-4xl sm:text-6xl text-white leading-tight max-w-xs sm:max-w-2xl"
-          style={{ fontFamily: "'Fraunces', serif" }}
-        >
-          {t('title')}
-        </h1>
-        <p className="text-sm text-white/60 max-w-xs sm:max-w-sm leading-relaxed">
-          {t('subtitle')}
-        </p>
-        <Link
-          href={`/${locale}/menu`}
-          className="mt-2 inline-block bg-white text-[#1a1a18] text-sm font-medium
-                     px-7 py-3 rounded-lg hover:opacity-90 transition-opacity"
-        >
-          {t('cta')}
-        </Link>
+      {/* ── Hero con foto ── */}
+      <section style={{ position: 'relative', minHeight: '520px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+        <img
+          src="/hero1.jpg"
+          alt="Trattoria Da Simonetta"
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+        />
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.55)' }} />
+        <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', textAlign: 'center', padding: '60px 24px' }}>
+          <p style={{ fontSize: '11px', letterSpacing: '0.12em', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}>
+            {t('eyebrow')}
+          </p>
+          <h1 style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', color: '#fff', lineHeight: 1.2, maxWidth: '640px', margin: 0 }}>
+            {t('title')}
+          </h1>
+          <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.65)', maxWidth: '320px', lineHeight: 1.6, margin: 0 }}>
+            {t('subtitle')}
+          </p>
+          <Link
+            href={`/${locale}/menu`}
+            style={{ marginTop: '8px', display: 'inline-block', background: '#fff', color: '#1a1a18', fontSize: '13px', fontWeight: 500, padding: '10px 24px', borderRadius: '999px', textDecoration: 'none' }}
+          >
+            {t('cta')}
+          </Link>
+        </div>
       </section>
 
-      {/* ── Strip info: 1 colonna su mobile, 3 su desktop ── */}
+      {/* ── Strip info ── */}
       <section className="border-b border-black/10 grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-black/10">
         <div className="px-6 py-4">
           <p className="text-xs text-[#6a6a5a] uppercase tracking-wide mb-1">{t('strip.hours')}</p>
@@ -57,38 +73,48 @@ export default async function HomePage({
         </div>
         <div className="px-6 py-4">
           <p className="text-xs text-[#6a6a5a] uppercase tracking-wide mb-1">{t('strip.contact')}</p>
-          {/* Numero cliccabile su mobile */}
           <a href="tel:+390670491589" className="text-sm font-medium hover:text-[#6a6a5a] transition-colors">
             06 7049 1589
           </a>
         </div>
       </section>
 
-      {/* ── Piatti in evidenza ── */}
+      {/* ── 3 Punti di forza ── */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <p className="text-xs text-[#6a6a5a] uppercase tracking-widest mb-2">{t('featured')}</p>
-        <h2 className="text-3xl sm:text-4xl mb-8 sm:mb-10" style={{ fontFamily: "'Fraunces', serif" }}>
-          {t('featuredTitle')}
+        <p className="text-xs text-[#6a6a5a] uppercase tracking-widest mb-2">
+          {locale === 'it' ? 'Perché da noi' : 'Why us'}
+        </p>
+        <h2 className="text-3xl sm:text-4xl mb-10" style={{ fontFamily: "'Fraunces', serif" }}>
+          {locale === 'it' ? 'La cucina di una volta' : 'Old-school Roman cooking'}
         </h2>
-        {/* 1 colonna su mobile piccolo, 2 su mobile medio, 4 su desktop */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-          {featured.map((item: any) => (
-            <div key={item.id} className="border border-black/10 rounded-xl p-3 sm:p-4 bg-white/50">
-              <p className="font-medium text-sm mb-1">{item.name[locale]}</p>
-              {item.description && (
-                <p className="text-xs text-[#6a6a5a] leading-snug mb-2 sm:mb-3">
-                  {item.description[locale]}
-                </p>
-              )}
-              <p className="text-sm sm:text-base font-medium">€{item.price.toFixed(2)}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+          {punti.map(p => (
+            <div key={p.title} className="flex flex-col gap-3">
+              <span style={{ fontSize: '2rem' }}>{p.icon}</span>
+              <h3 className="text-base font-medium" style={{ fontFamily: "'Fraunces', serif" }}>
+                {p.title}
+              </h3>
+              <p className="text-sm text-[#6a6a5a] leading-relaxed">{p.desc}</p>
             </div>
           ))}
         </div>
-        <div className="mt-8 text-center">
+      </section>
+
+      {/* ── Chi siamo ── */}
+      <section style={{ background: '#1a1a18', borderTop: '0.5px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ maxWidth: '960px', margin: '0 auto', padding: '64px 24px' }}>
+          <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '10px' }}>
+            {chiSiamo.eyebrow}
+          </p>
+          <h2 style={{ fontFamily: "'Fraunces', serif", fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', color: '#fff', marginBottom: '20px', lineHeight: 1.25 }}>
+            {chiSiamo.title}
+          </h2>
+          <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.65)', lineHeight: 1.75, maxWidth: '640px', marginBottom: '32px' }}>
+            {chiSiamo.body}
+          </p>
           <Link
             href={`/${locale}/menu`}
-            className="text-sm border border-black/20 px-5 py-2.5 rounded-lg
-                       hover:bg-[#1a1a18] hover:text-[#f5f3ee] transition-all"
+            style={{ display: 'inline-block', fontSize: '13px', fontWeight: 500, padding: '10px 22px', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}
           >
             {t('cta')} →
           </Link>
