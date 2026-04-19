@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase/client'
 import type { MenuItem, MenuCategory } from '@/lib/types'
 
 const LANGS = ['it', 'en', 'fr', 'es', 'de'] as const
-const LANG_FLAGS: Record<string, string> = { it: 'IT', en: 'EN', fr: 'FR', es: 'ES', de: 'DE' }
+const LANG_FLAGS: Record<string, string> = { it: '🇮🇹 IT', en: '🇬🇧 EN', fr: '🇫🇷 FR', es: '🇪🇸 ES', de: '🇩🇪 DE' }
 
 const s: Record<string, React.CSSProperties> = {
   wrap: { minHeight: '100vh', background: '#f5f3ee' },
@@ -37,6 +37,7 @@ const s: Record<string, React.CSSProperties> = {
   acts: { display: 'flex', gap: '5px' },
   btnE: { fontSize: '11px', padding: '4px 10px', border: '0.5px solid rgba(0,0,0,0.15)', borderRadius: '6px', cursor: 'pointer', background: 'none', color: '#6a6a5a' },
   btnD: { fontSize: '11px', padding: '4px 10px', border: '0.5px solid #f09595', borderRadius: '6px', cursor: 'pointer', background: 'none', color: '#a32d2d' },
+  btnH: { fontSize: '11px', padding: '4px 10px', border: '0.5px solid #FAC775', borderRadius: '6px', cursor: 'pointer', background: 'none', color: '#854F0B' },
   overlay: { position: 'fixed' as const, inset: 0, background: 'rgba(0,0,0,0.45)', zIndex: 100, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '20px', overflowY: 'auto' as const },
   modal: { background: '#fff', borderRadius: '16px', padding: '24px', width: '100%', maxWidth: '520px', border: '0.5px solid rgba(0,0,0,0.1)', margin: 'auto' },
   modalTitle: { fontSize: '15px', fontWeight: 500, marginBottom: '4px', color: '#1a1a18' },
@@ -162,6 +163,18 @@ export default function AdminDashboard({
     setDeleteId(null)
   }
 
+  async function toggleActive(item: MenuItem) {
+    const newActive = !item.active
+    const { error } = await supabase
+      .from('menu_items')
+      .update({ active: newActive })
+      .eq('id', item.id)
+    if (!error) {
+      setItems(prev => prev.map(i => i.id === item.id ? { ...i, active: newActive } : i))
+      showToast(newActive ? 'Piatto visibile sul menu' : 'Piatto nascosto dal menu')
+    }
+  }
+
   async function logout() {
     await supabase.auth.signOut()
     router.push('/admin')
@@ -218,7 +231,14 @@ export default function AdminDashboard({
               {filtered.map(item => (
                 <tr key={item.id} onMouseEnter={e => (e.currentTarget.style.background = '#faf9f6')} onMouseLeave={e => (e.currentTarget.style.background = '')}>
                   <td style={s.td}>
-                    <div style={s.nameIt}>{item.translations.it?.name || '—'}</div>
+                    <div style={s.nameIt}>
+                      {item.translations.it?.name || '—'}
+                      {!item.active && (
+                        <span style={{ fontSize: '10px', marginLeft: '6px', padding: '1px 6px', borderRadius: '20px', background: '#faeeda', color: '#854F0B' }}>
+                          nascosto
+                        </span>
+                      )}
+                    </div>
                     <div style={s.nameEn}>{item.translations.en?.name || ''}</div>
                   </td>
                   <td style={s.td}><span style={s.catPill}>{catLabel(item.category)}</span></td>
@@ -234,6 +254,9 @@ export default function AdminDashboard({
                   <td style={s.td}>
                     <div style={s.acts}>
                       <button style={s.btnE} onClick={() => openModal(item)}>Modifica</button>
+                      <button style={s.btnH} onClick={() => toggleActive(item)}>
+                        {item.active ? 'Nascondi' : 'Mostra'}
+                      </button>
                       <button style={s.btnD} onClick={() => setDeleteId(item.id)}>Elimina</button>
                     </div>
                   </td>
@@ -273,7 +296,7 @@ export default function AdminDashboard({
             <div style={{ ...s.langTabs, marginTop: '10px' }}>
               {LANGS.map(l => (
                 <button key={l} style={activeLang === l ? s.langTabOn : s.langTab} onClick={() => setActiveLang(l)}>
-                  {LANG_FLAGS[l]} {l.toUpperCase()}
+                  {LANG_FLAGS[l]}
                 </button>
               ))}
             </div>
