@@ -15,7 +15,8 @@ export default function ChiSiamo({
   const titleRef = useRef<HTMLHeadingElement>(null)
   const bodyRef = useRef<HTMLParagraphElement>(null)
   const imgRef = useRef<HTMLDivElement>(null)
-
+ 
+  
   useEffect(() => {
     const els = [imgRef, eyebrowRef, titleRef, bodyRef]
     const observer = new IntersectionObserver(
